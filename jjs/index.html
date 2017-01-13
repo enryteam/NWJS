@@ -1,0 +1,1949 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<meta http-equiv="Access-Control-Allow-Origin" content="*">
+	<link rel="stylesheet" type="text/css" href="attms/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="attms/easyui/themes/icon.css">
+  <script type="text/javascript" src="attms/js/jquery.min.js"></script>
+  <script type="text/javascript" src="attms/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="attms/easyui/easyloader.js"></script>
+	<script type="text/javascript" src="attms/highstock/highstock.js"></script>
+	<script type="text/javascript" src="attms/highstock/modules/exporting.js"></script>
+	<script type="text/javascript" src="attms/highstock/themes/dark-unica.js"></script>
+  <script type="text/javascript" src="attms/js/init.js"></script>
+	<script type="text/javascript" src="http://apistore.51daniu.cn/node_modules/socket.io/node_modules/socket.io-client/socket.io.js"></script>
+	<style media="screen">
+			*{font-family: "微软雅黑"!important;}
+			.highcharts-contextbutton{display: none;}
+			.tabs-header{border: 0 none;width: 100%!important;background-color: #e03e3f;height: 40px;line-height: 40px;}
+			.tabs-panels{border: 0 none;width: 100%!important;}
+			.tabs-wrap{width: 100%!important;}
+			.panel-header-noborder {border:0 none;}
+			.tabs{height: 40px!important;line-height: 40px!important;}
+			.tabs li a.tabs-inner,.tabs li.tabs-selected a.tabs-inner{border: 0 none;height: 40px!important;line-height: 40px!important;}
+			.tabs li a.tabs-inner{background-color: #e03e3f;}
+			.tabs li.tabs-selected a.tabs-inner{background-color: #981314;}
+			.panel-body panel-body-noheader panel-body-noborder{width: 100%!important;}
+			#top_choose>a{border:1px solid transparent;display:inline-block;height: 26px;width: 27px;vertical-align: middle;}
+			#top_choose>a>img{display: block;}
+			#top_choose>a.active{border:1px solid #bababa;}
+			#top_choose>i{vertical-align: middle;display: inline-block;font-size: 12px;color: #ffffff;font-style: normal;padding:0 15px;height: 26px;line-height: 26px;font-weight: normal;cursor: pointer;}
+			#top_choose>i.active{color: #e03e3f;}
+			.jiaoyi_li{margin:45px 5px 50px;border:1px solid #e03e3f;padding: 0 0 40px;position: relative;}
+			.jiaoyi_li>li{overflow: hidden;height: 22px;line-height: 22px;}
+			.jiaoyi_li>li:nth-child(2){margin-top: 22px;}
+			.jiaoyi_li>li:not(:first-child):hover,.jiaoyi_li>li:not(:first-child).active{background:rgba(0, 38, 255, 0.4) none repeat scroll 0 0;cursor: pointer;}
+			.jiaoyi_li>li>i{font-style: normal;color: #ffffff;font-size: 14px;display: inline-block;text-align: right;float: left;}
+			.jiaoyi_li>li>i>img{vertical-align: middle;margin-left: 3px;position: relative;top:-2px;}
+			.jiaoyi_li>li>i.i1{width: 60px;color: #c0c0c0;text-align: center;}
+			.jiaoyi_li>li>i.i2{width: 100px;text-align: left;}
+			.jiaoyi_li>li>i.i3{width: 305px;overflow: hidden;height: 22px;}
+			.jiaoyi_li>li>i.i4{width: 120px;}
+			.jiaoyi_li>li>i.i5{width: 120px;}
+			.jiaoyi_li>li>i.i6{width: 120px;}
+			.jiaoyi_li>li>i.i7{width: 120px;}
+			.jiaoyi_li>li>i.i8{width: 120px;}
+			.jiaoyi_li>li>i.i9{width: 120px;}
+			.jiaoyi_li>li>i.i10{width: 120px;}
+			.jiaoyi_li>li>i.i12{width: 120px;}
+			.jiaoyi_li>li>i.i13{width: 120px;text-align: center;}
+			.jiaoyi_li>li>i.i14{width: 60px;}
+			/*.jiaoyi_li>li>i.i15{width: 60px;}
+			.jiaoyi_li>li>i.i16{width: 60px;}
+			.jiaoyi_li>li>i.i17{width: 60px;}
+			.jiaoyi_li>li>i.i18{width: 90px;}
+			.jiaoyi_li>li>i.i19{width: 90px;}
+			.jiaoyi_li>li>i.i20{width: 110px;}
+			.jiaoyi_li>li>i.i21{width: 60px;}
+			.jiaoyi_li>li>i.i22{width: 60px;}
+			.jiaoyi_li>li>i.i23{width: 60px;}*/
+			.jiaoyi_li>li>i.i24{width: 180px;text-align: center;}
+			.jiaoyi_li>li>i.i25{width: 160px;text-align: center;}
+			.jiaoyi_li>li>i.i30{width: 150px;text-align: center;}
+			.jiaoyi_li>li>i.i31{width: 95px;text-align: center;}
+			.jiaoyi_li>li>i.yellow{color: #ffff00;}
+			.jiaoyi_li>li>i.red{color: #e03e3f;}
+			.jiaoyi_li>li>i.green{color: #00ff60;}
+			.jiaoyi_li>h6{position: absolute;bottom: 0;margin: 0;padding: 0;font-weight: normal;overflow: hidden;height: 28px;}
+			.jiaoyi_li>h6>a{font-size: 14px;color: #ffffff;display: inline-block;margin-right: 5px;background-color: #2a2a2a;height: 28px;line-height: 28px;text-align: center;padding:0 15px;text-decoration:none;}
+			.jiaoyi_li>h6>a.active{background: -webkit-gradient(radial,50% 100%,0,50% 100%,30,from(#7e0000),to(#1c0000))}
+			.shay_foot{background-color: black;margin: 0;padding:0 0 10px;position: fixed;width: 100%;bottom:0;}
+			.shay_foot>i{display: inline-block;font-size: 16px;font-style: normal;font-weight: normal;color: #ffffff;margin-left: 20px;}
+			.shay_foot>i.yellow{color: #ffff00;}
+			.shay_foot>i.green{color: #00ff60;}
+			.shay_foot>b{font-weight: normal;position: absolute;right:30px;top:5px;font-size: 16px;color: #ffffff;display: inline-block;}
+			.shay_foot>b>strong{font-weight: normal;padding: 0 15px;border-left: 1px solid #981314;border-right: 1px solid #981314;display: inline-block;margin-right: 5px;color: #00ff60;}
+
+			.k_detail{margin:60px 5px 5px;border-bottom:1px solid #e03e3f;padding: 0;height: 87%;position: relative;margin-bottom: 0;color: #fff;display:none;}
+			.kk{margin:60px 5px 5px;border-bottom:1px solid #e03e3f;padding: 0;height: 87%;position: relative;margin-bottom: 0;color: #fff;display:none;}
+			.k_detail1{margin:60px 5px 5px;border-bottom:1px solid #e03e3f;padding: 0;height: 87%;position: relative;margin-bottom: 0;color: #fff;}
+			.right_ul1{border:1px solid #e03e3f;padding: 0;height: 92%;overflow: auto;position: relative;}
+			.right_ul1>li{list-style: none;height: 18px;line-height: 18px;}
+			.right_ul1>li>i{font-style: normal;font-size: 12px;color: #07d3d3;width: 48%;display: inline-block;padding:0 1%;position: relative;}
+			.right_ul1>li>i>strong,.right_ul1>li>i>b{font-weight: normal;display: inline-block;}
+			.right_ul1>li>i>strong{color: #ffffff;float: right;}
+			.right_ul1>li>i>strong::after{clear:both;}
+			.right_ul1>li>i>strong.yellow{color: #d3d307;}
+			.right_ul1>li>i>b{width: 12px;height: 12px;line-height: 12px;text-align: center;border:1px solid #07d3d3;border-radius: 50%;margin: 0 3px;}
+			.right_ul1>li>i>span{color: #ffffff;display: inline-block;position: absolute;right: 3px;}
+			.right_ul1>li>i>span.red{color: #e03e3f;}
+			.right_ul1>li>i>span.green{color: #07d354;}
+			.right_ul1>li>i>span.yellow{color: #d3d307;}
+			.right_ul1>li>i>span.gray{color: #a1a0a0;}
+
+			.right_ul1>div>li{list-style: none;}
+			.right_ul1>div>li>span{display: inline-block;width: 52%;padding:0;font-size: 12px;color: #a1a0a0;text-align: center;}
+			.right_ul1>div>li>strong{font-weight:normal;font-style:normal;display: inline-block;width: 30%;padding:0;font-size: 12px;color: #e03e3f;text-align: center;}
+			.right_ul1>div>li>b{font-weight:normal;font-style:normal;display: inline-block;width: 18%;padding:0;font-size: 12px;color: #d3d307;text-align: center;}
+			.right_ul1>li>a{font-size: 14px;color: #ffffff;display: inline-block;margin-right: 2px;background-color: #2a2a2a;height: 24px;line-height: 24px;text-align: center;padding:0 15px;text-decoration:none;background: -webkit-gradient(radial,50% 100%,0,50% 100%,30,from(#7e0000),to(#1c0000))}
+
+
+
+			/*交易弹出框*/
+			.shay_dail_window{display: none;position: fixed;width: 550px;height: 270px;background-color: #ffffff;top:50%;left:55%;margin-left:-285px;margin-top:-150px;z-index: 99999999;}
+			.shay_dail_window>h1{height: 40px;line-height: 40px;background-color: #e03e3f;color: #ffffff;font-size: 18px;text-align: center;margin: 0;padding: 0;font-weight: normal;}
+			.shay_dail_window>h1>img{position: absolute;right: 10px;top:10px;cursor: pointer;}
+			.shay_dail_window>h2>a{display: block;width: 250px;height: 40px;line-height: 40px;margin: 0 auto;text-align: center;text-decoration: none;color: #ffffff;font-size: 16px;}
+			#shay_dail_window2,#shay_dail_window3{height: 410px;}
+			.shay_dail_window>div{width: 330px;margin:15px auto 0;}
+			.shay_dail_window>div>h1{margin: 0;padding: 0;font-weight: normal;padding: 10px 0;font-size: 14px;color: #333333;font-weight: normal;position: relative;}
+			.shay_dail_window>div>h1>i{font-size: 16px;color: #333333;font-style: normal;display: inline-block;width: 85px;text-align: right;}
+			.shay_dail_window>div>h1>span{font-size: 14px;color: #b1181a;}
+			.shay_dail_window>div>h1>input{width: 220px;height: 40px;line-height: 40px;border: 1px solid #e1e1e1;padding: 0 10px;font-size: 14px;color: #999999;}
+			.shay_dail_window>h5{margin:15px 0 0;padding: 0;font-weight: normal;text-align: center;}
+			.shay_dail_window>h5>a{width: 250px;height: 40px;line-height: 40px;background-color: #35b4e1;color: #ffffff;text-align: center;display: inline-block;margin: 0 auto;font-size: 16px;text-decoration: none;}
+			.shay_dail_window>div>h1>ul{display: inline-block;margin: 0;padding: 0;position: absolute;top:10px;}
+			.shay_dail_window>div>h1>ul>li{list-style: none;float: left;width: 52px;margin-right: 8px;cursor: pointer;}
+			.shay_dail_window>div>h1>ul>li>a{display: inline-block;width: 52px;height: 17px;background-color: transparent;border: 1px solid #efefef;}
+			.shay_dail_window>div>h1>ul>li>b{display: inline-block;width: 52px;text-align: right;font-weight: normal;font-size: 12px;color: #999999;}
+			.shay_dail_window>div>h1>ul>li.active>a{background-color: #13d94b;}
+			.shay_dail_window>div>h1>ul>li.active>b{color: #13d94b;}
+			/*交易弹出框2*/
+			.shay_dail_window2{display: none;position: fixed;width: 585px;height: 480px;background-color: #ffffff;top:50%;left:55%;margin-left:-315px;margin-top:-200px;z-index: 99999999;}
+			.shay_dail_window2>h1{height: 40px;line-height: 40px;background-color: #e8e8e8;color: #333333;font-size: 14px;margin: 0;padding:0 15px;}
+			.shay_dail_window2>h1>img{position: absolute;right: 10px;top:10px;cursor: pointer;}
+			.shay_dail_window2>div{border: 1px solid #cccccc;margin: 15px auto 0;width: 335px;height: 30px;line-height: 30px;padding: 0 10px;}
+			.shay_dail_window2>div>i{font-size: 14px;color: #333333;font-style: normal;}
+			.shay_dail_window2>div>b{color: #333333;display: inline-block;float: right;font-size: 14px;font-weight: normal;height: 30px;overflow: hidden;width: 190px;text-overflow:ellipsis;-o-text-overflow:ellipsis;white-space:nowrap;}
+			.shay_dail_window2>div>b>strong{font-size: 14px;color: #e03e3f;font-weight: normal;}
+			.shay_dail_window2>h2{width: 357px;height: 30px;line-height: 30px;margin:15px auto 0;}
+			.shay_dail_window2>h2>.a1{display: inline-block;width: 30px;height: 30px;margin-right: 10px;float: left;}
+			.shay_dail_window2>h2>.a2{display: inline-block;width: 30px;height: 30px;float: left;}
+			.shay_dail_window2>h2>input{display: inline-block;width: 255px;height: 30px;line-height: 30px;margin-right: 10px;float: left;padding: 0 10px;border: 1px solid #cccccc;text-align: center;font-size: 14px;color: #333333;font-weight: bold;}
+			.shay_dail_window2>h3{width: 357px;height: 30px;line-height: 30px;margin:7px auto 0;}
+			.shay_dail_window2>h3 i,.shay_dail_window2>h3 b{font-style: normal;font-weight: normal;}
+			.shay_dail_window2>h3>i{font-size: 16px;color: #333333;}
+			.shay_dail_window2>h3>i>b{font-size: 16px;color: #4db164;}
+			.shay_dail_window2>h3>b{font-size: 16px;color: #333333;float: right;}
+			.shay_dail_window2>h3>b>i{font-size: 16px;color: #e03e3f;}
+			.shay_dail_window2>h4{width: 357px;height: 30px;line-height: 30px;margin:15px auto 0;}
+			.shay_dail_window2>h4>a{display: inline-block;width: 65px;margin-right: 5px;border: 1px solid #cccccc;color: #999999;font-size: 14px;text-align: center;height: 30px;line-height: 30px;font-weight: normal;text-decoration:none;}
+			.shay_dail_window2>h4>a.active{color: #e03e3f;}
+			.shay_dail_window2>h5{width: 357px;height: 20px;line-height: 20px;margin:7px auto 0;font-weight: normal;font-size: 12px;color: #999999;}
+			.shay_dail_window2>h5>i{color: #e03e3f;font-style: normal;}
+			.shay_dail_window2>h6{width: 357px;height: 30px;line-height: 30px;margin:15px auto 0;font-weight: normal;}
+			.shay_dail_window2>h6>input{width: 310px;height:30px;line-height: 30px;border: 1px solid #cccccc;padding:0 35px 0 10px;background-image: url('attms/img/pas.png');background-repeat: no-repeat;background-position:324px 0;}
+			.shay_dail_window2>p{border-top: 1px solid #cccccc;margin-top: 20px;text-align: center;}
+			.shay_dail_window2>p>a{display: inline-block;width: 90px;height: 36px;line-height: 36px;font-size: 14px;margin: 18px 12px 0;text-decoration:none;}
+			.shay_dail_window2>p>a.a1{color: #ffffff;background-color: #e03e3f;}
+			.shay_dail_window2>p>a.a2{color: #666666;background-color: #e6e6e6;}
+	</style>
+	<script type="text/javascript">
+
+	</script>
+</head>
+<body onclick="javascript:$('#mm').hide();$('#mm1').hide();$('#mm2').hide();$('#mm3').hide();$('#mm4').hide();">
+		<div class="easyui-layout" data-options="fit:true">
+			<div class="easyui-tabs" style="border:0 none;height:100%;">
+        <div title="交易" data-options="iconCls:'icon-large-icon1'" style="padding:0;border:0 none;background-color:#000000;">
+					<a href="javascript:;" style="position:absolute;display:block;width:103px;height:40px;background-color:transparent;top:0;" onclick="javascript:location.reload();"></a>
+					<h1 style="padding:5px 5px 6px;margin:0;height:35px;overflow:hidden;background-color:#1d1c1c;width:100%;z-index:1000000;position:fixed;" id="top_choose">
+						<a href="javascript:;" class="active" onclick="javascript:location.reload();"><img src="attms/img/1.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;" onclick="javascript:kk_xian();"><img src="attms/img/2.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;" onclick="javascript:daohang_fenshi();"><img src="attms/img/3.png" style="vertical-align:middle;" /></a>
+						<!-- <a href="javascript:;"><img src="attms/img/4.png" style="vertical-align:middle;" /></a> -->
+						<a href="javascript:;" onclick="javascript:kdaohang('日');"><img src="attms/img/5.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;" onclick="javascript:kdaohang('周');"><img src="attms/img/6.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;" onclick="javascript:kdaohang('月');"><img src="attms/img/7.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;" onclick="javascript:kdaohang('季');"><img src="attms/img/8.png" style="vertical-align:middle;" /></a>
+						<!-- <a href="javascript:;"><img src="attms/img/9.png" style="vertical-align:middle;" /></a> -->
+						<a href="javascript:;" onclick="javascript:daohang_fenshi(1);"><img src="attms/img/10.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;" onclick="javascript:daohang_fenshi(3);"><img src="attms/img/11.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;" onclick="javascript:daohang_fenshi(5);"><img src="attms/img/12.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;" onclick="javascript:daohang_fenshi(15);"><img src="attms/img/13.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;" onclick="javascript:daohang_fenshi(30);"><img src="attms/img/14.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;" onclick="javascript:daohang_fenshi(60);"><img src="attms/img/15.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;" onclick="javascript:daohang_fenshi(120);"><img src="attms/img/16.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;" onclick="javascript:daohang_fenshi(240);"><img src="attms/img/17.png" style="vertical-align:middle;" /></a>
+						<!-- <a href="javascript:;"><img src="attms/img/18.png" style="vertical-align:middle;" /></a> -->
+						<!-- <a href="javascript:;"><img src="attms/img/19.png" style="vertical-align:middle;" /></a> -->
+						<!-- <a href="javascript:;" style="margin-right:5px;"><img src="attms/img/20.png" style="vertical-align:middle;" /></a> -->
+						<!-- <i style="border-left:1px solid #ffffff;" onclick="javascript:$('#shay_dail_window1').show();">发起交易</i> -->
+						<i id="shay_jiao_jilu">持仓记录</i>
+						<i id="shay_jiao_mairu" style="display:none;" onclick="javascript:$('#shay_dail_window4').show();mairu();">买入交易</i>
+						<i id="shay_jiao_zixuan">自选商品</i>
+					</h1>
+					<ul class="jiaoyi_li" id="jiaoyi_list">
+							<li style="border-bottom:1px solid #e03e3f;position:fixed;width:98.5%;z-index:10000;background-color:#000;border-top:1px solid #e03e3f;">
+								<i class="i1">&nbsp;</i>
+								<i class="i2 yellow">代码<img src="attms/img/top.png" alt="" /></i>
+								<i class="i3">商品名称</i>
+								<i class="i4">开盘价</i>
+								<i class="i5">最新</i>
+								<i class="i6">涨跌</i>
+								<i class="i7">幅度</i>
+								<i class="i8">最高价</i>
+								<i class="i9">最低价</i>
+								<i class="i10">昨收盘价</i>
+								<i class="i12">均价</i>
+								<i class="i13">现量</i>
+							</li>
+					</ul>
+					<ul class="jiaoyi_li" id="jiaoyi_list1" style="display:none;"></ul>
+					<ul class="jiaoyi_li" id="jiaoyi_list2" style="display:none;"></ul>
+					<ul class="jiaoyi_li" id="jiaoyi_list3" style="display:none;"></ul>
+					<div class="k_detail">
+							<div data-options="region:'center'" id="container1" style="height:98%;width:83%;float:left;"></div>
+							<div style="float:left;width:15%;height:100%;margin:0 1%;">
+									<!-- <h1 style="text-align:center;padding:0;margin:0;font-weight:normal;height:33px;line-height:33px;"><img src="attms/img/l.png" style="float:left;vertical-align:middle;position:relative;top:5px;cursor:pointer;" /><i style="font-style:normal;font-size:22px;color:#d3d307;" id="release_detail_title">邮票指数</i><b style="font-weight:normal;font-size:22px;color:#07d3d3;" id="release_detail_code">100023</b><img src="attms/img/r.png" style="float:right;vertical-align:middle;position:relative;top:5px;cursor:pointer;" /></h1> -->
+									<h1 style="text-align:center;padding:0;margin:0;font-weight:normal;height:5%;line-height:33px;"><img src="attms/img/l.png" style="float:left;vertical-align:middle;position:relative;top:5px;cursor:pointer;" onclick="javascript:zuoyi();" /><b style="font-weight:normal;font-size:22px;color:#07d3d3;" id="release_detail_code">100023</b><img src="attms/img/r.png" style="float:right;vertical-align:middle;position:relative;top:5px;cursor:pointer;" onclick="javascript:youyi();" /></h1>
+									<ul class="right_ul1">
+										<li><i>最新<span class="red" id="release_detail_newprice">44.58</span></i><i>均价<span id="release_detail_avarageprice">0</span></i></li>
+										<li><i>涨跌<span class="red" id="release_detail_range">0.28</span></i><i>开盘价<span id="release_detail_openprice">44.29</span></i></li>
+										<li><i>幅度<span class="red" id="release_detail_rangerate">0.65%</span></i><i>最高价<span class="red" id="release_detail_highestprice">45.17</span></i></li>
+										<li><i>现量<span class="yellow" id="release_detail_surplus">0</span></i><i>最低价<span class="green" id="release_detail_lowestprice">43.66</span></i></li>
+										<li><i>总量<span class="yellow" id="release_detail_total">4085879</span></i><i>成交量<span class="yellow" id="release_detail_dealnum">20345</span></i></li>
+										<li style="border-bottom:1px solid #e03e3f;"><i>昨收<span class="gray" id="release_detail_closeprice">44.29</span></i></li>
+										<li style="text-align:center;font-size:12px;border-bottom:1px solid #e03e3f;color:#07d3d3;">成交记录</li>
+										<div id="chengjiao_jilu"></div>
+										<li style="height:24px;line-height24px;border-top:1px solid #e03e3f;margin-top:10px;"><a href="javascript:;">细</a></li>
+									</ul>
+							</div>
+							<h6 style="clear:both;"></h6>
+					</div>
+
+					<div class="kk">
+							<div data-options="region:'center'" id="container3" style="height:98%;width:83%;float:left;"></div>
+							<div style="float:left;width:15%;height:100%;margin:0 1%;">
+									<!-- <h1 style="text-align:center;padding:0;margin:0;font-weight:normal;height:33px;line-height:33px;"><img src="attms/img/l.png" style="float:left;vertical-align:middle;position:relative;top:5px;cursor:pointer;" /><i style="font-style:normal;font-size:22px;color:#d3d307;" id="release_detail_title">邮票指数</i><b style="font-weight:normal;font-size:22px;color:#07d3d3;" id="release_detail_code">100023</b><img src="attms/img/r.png" style="float:right;vertical-align:middle;position:relative;top:5px;cursor:pointer;" /></h1> -->
+									<h1 style="text-align:center;padding:0;margin:0;font-weight:normal;height:5%;line-height:33px;"><img src="attms/img/l.png" style="float:left;vertical-align:middle;position:relative;top:5px;cursor:pointer;" onclick="javascript:kzuoyi();" /><b style="font-weight:normal;font-size:22px;color:#07d3d3;" id="krelease_detail_code">100023</b><img src="attms/img/r.png" style="float:right;vertical-align:middle;position:relative;top:5px;cursor:pointer;" onclick="javascript:kyouyi();" /></h1>
+									<ul class="right_ul1">
+										<li><i>最新<span class="red" id="krelease_detail_newprice">44.58</span></i><i>均价<span id="krelease_detail_avarageprice">0</span></i></li>
+										<li><i>涨跌<span class="red" id="krelease_detail_range">0.28</span></i><i>开盘价<span id="krelease_detail_openprice">44.29</span></i></li>
+										<li><i>幅度<span class="red" id="krelease_detail_rangerate">0.65%</span></i><i>最高价<span class="red" id="krelease_detail_highestprice">45.17</span></i></li>
+										<li><i>现量<span class="yellow" id="krelease_detail_surplus">0</span></i><i>最低价<span class="green" id="krelease_detail_lowestprice">43.66</span></i></li>
+										<li><i>总量<span class="yellow" id="krelease_detail_total">4085879</span></i><i>成交量<span class="yellow" id="krelease_detail_dealnum">20345</span></i></li>
+										<li style="border-bottom:1px solid #e03e3f;"><i>昨收<span class="gray" id="krelease_detail_closeprice">44.29</span></i></li>
+										<li style="text-align:center;font-size:12px;border-bottom:1px solid #e03e3f;color:#07d3d3;">成交记录</li>
+										<div id="kchengjiao_jilu"></div>
+										<li style="height:24px;line-height24px;border-top:1px solid #e03e3f;margin-top:10px;"><a href="javascript:;">细</a></li>
+									</ul>
+							</div>
+							<h6 style="clear:both;"></h6>
+					</div>
+
+					<!-- 交易弹出框 -->
+					<!-- 发起交易 -->
+					<div class="shay_dail_window" id="shay_dail_window1">
+							<h1>发起交易 <img src="attms/img/close.png" onclick="javascript:$('#shay_dail_window1').hide();" /></h1>
+							<h2 style="margin-top:55px;"><a href="javascript:;" style="background-color:#35b4e1;" onclick="javascript:$('#shay_dail_window1').hide();$('#shay_dail_window2').show();">买入交易</a></h2>
+							<h2 style="margin-top:33px;"><a href="javascript:;" style="background-color:#f89b24;" onclick="javascript:$('#shay_dail_window1').hide();$('#shay_dail_window3').show();">卖出交易</a></h2>
+					</div>
+
+					<!-- 买入交易弹出 -->
+					<!-- <div class="shay_dail_window" id="shay_dail_window2">
+							<h1>买入交易 <img src="attms/img/close.png" onclick="javascript:$('#shay_dail_window2').hide();" /></h1>
+							<div>
+									<h1><i>可用余额：</i><span>2980通用积分</span></h1>
+									<h1><i>买入价格：</i><input type="text" name="name" value="" placeholder="4795通用积分"></h1>
+									<h1><i>买入数量：</i><input type="number" name="name" value=""></h1>
+									<h1><i>总价：</i>0 通用积分</h1>
+									<h1><i>交易密码：</i><input type="password" name="name" value="" style="background-image: url('attms/img/psword.png');background-position: 205px 7px;background-repeat: no-repeat;padding-right: 40px;width: 190px;"><a href="javascript:;" style="position:absolute;display:inline-block;width:50px;height:40px;right:112px;"></a></h1>
+							</div>
+							<h5><a href="javascript:;">买入交易</a></h2>
+					</div> -->
+
+					<!-- 卖出交易弹出 -->
+					<!-- <div class="shay_dail_window" id="shay_dail_window3">
+							<h1>卖出交易 <img src="attms/img/close.png" onclick="javascript:$('#shay_dail_window3').hide();" /></h1>
+							<div>
+									<h1><i>当前数量：</i><span>200个</span></h1>
+									<h1><i>卖出价格：</i><input type="text" name="name" value="" placeholder="4795通用积分"></h1>
+									<h1 style="margin:10px 0 20px;"><i>卖出数量：</i>
+										<ul>
+											<li id="mai_num1"><a href="javascript:;"></a><b>25%</b></li>
+											<li id="mai_num2"><a href="javascript:;"></a><b>50%</b></li>
+											<li id="mai_num3"><a href="javascript:;"></a><b>75%</b></li>
+											<li id="mai_num4"><a href="javascript:;"></a><b>100%</b></li>
+											<h6 style="clear:both;"></h6>
+										</ul>
+									</h1>
+									<h1><i>总价：</i>0 通用积分</h1>
+									<h1><i>交易密码：</i><input type="password" name="name" value="" style="background-image: url('attms/img/psword.png');background-position: 205px 7px;background-repeat: no-repeat;padding-right: 40px;width: 190px;"><a href="javascript:;" style="position:absolute;display:inline-block;width:50px;height:40px;right:112px;"></a></h1>
+							</div>
+							<h5><a href="javascript:;" style="background-color:#f89b24;">卖出交易</a></h2>
+					</div> -->
+
+
+					<h1 class="shay_foot"><i class="yellow" id="zongliang">总量 — — </i><i class="green" id="xianliang">现量 — — </i><i class="yellow" id="chengjiaoliang">成交量 — — </i><b><strong>连接状态：优</strong></b></h1>
+					<div id="mm" data-options="inline:true" style="width:200px;position:absolute;display:none;">
+						<div onclick="javascript:jiaoyi_detail();">查看</div>
+						<div onclick="javascript:$('#shay_dail_window4').show();mairu();">买入交易</div>
+						<div onclick="javascript:add_zixuan();">加入自选</div>
+					</div>
+					<div id="mm1" data-options="inline:true" style="width:200px;position:absolute;display:none;">
+						<div onclick="javascript:del_zixuan();">取消自选</div>
+						<div onclick="javascript:jiaoyi_detail();">查看</div>
+						<!-- <div data-options="disabled:true">Print</div> -->
+					</div>
+					<div id="mm2" data-options="inline:true" style="width:200px;position:absolute;display:none;">
+						<div onclick="javascript:$('#shay_dail_window4').show();mairu();">买入</div>
+						<div class="menu-sep"></div>
+						<div onclick="javascript:chedan();">撤单</div>
+						<div onclick="javascript:jiaoyi_detail();">行情</div>
+						<div onclick="javascript:cc_cx();">查询</div>
+					</div>
+					<div id="mm3" data-options="inline:true" style="width:200px;position:absolute;display:none;">
+						<div onclick="javascript:$('#shay_dail_window4').show();mairu();">买入</div>
+						<div class="menu-sep"></div>
+						<div onclick="javascript:$('#shay_dail_window5').show();maichu();">卖出</div>
+						<div onclick="javascript:jiaoyi_detail();">行情</div>
+						<div onclick="javascript:cc_cx();">查询</div>
+					</div>
+					<div id="mm4" data-options="inline:true" style="width:200px;position:absolute;display:none;">
+						<div onclick="javascript:del_jiaoyi();">删除</div>
+						<div onclick="javascript:jiaoyi_detail();">行情</div>
+						<div onclick="javascript:cc_cx();">查询</div>
+					</div>
+					<!-- 买入交易弹出框 -->
+					<div class="shay_dail_window2" id="shay_dail_window4">
+							<h1>买入交易 <img src="attms/img/close2.png" onclick="javascript:$('#shay_dail_window4').hide();" /></h1>
+							<div><i id="mairu_code"></i><b id="mairu_title"></b></div>
+							<h2><a href="javascript:;" class="a1" onclick="javascript:die();"><img src="attms/img/down.png" alt="" /></a><input type="text" name="name" value="" id="mairu_newprice" readonly><a href="javascript:;" class="a2" onclick="javascript:zhang();"><img src="attms/img/up.png" alt="" /></a><p style="clear:both;"></p></h2>
+							<h3><i>跌停 <b id="mairu_down"></b></i><b>涨停 <i id="mairu_up"></i></b></h3>
+							<div><input type="text" name="name" value="" style="width:30px;border:0 none;" id="kemai"><b>可买<strong id="mairu_dealnum"></strong></b></div>
+							<h4><a href="javascript:;" onclick="javascript:cang(1);">全仓</a><a href="javascript:;" onclick="javascript:cang(2);">半仓</a><a href="javascript:;" onclick="javascript:cang(3);">1/3仓</a><a href="javascript:;" onclick="javascript:cang(1.5);">2/3仓</a><a href="javascript:;" style="margin-right:0;" onclick="javascript:cang(4);">1/4仓</a></h4>
+							<div><i id="mairu_total"></i></div>
+							<h5>建仓手续费(<i id="mairu_fee"></i>)</h5>
+							<h6><input type="password" name="name" value="" placeholder="请输入支付密码" id="mairu_pas"></h6>
+							<p>
+								<a href="javascript:;" class="a1" onclick="javascript:mairu_jiaoyi();">买入</a>
+								<a href="javascript:;" class="a2" onclick="javascript:$('#shay_dail_window4').hide();" >取消</a>
+							</p>
+					</div>
+					<!-- 卖出交易弹出框 -->
+					<div class="shay_dail_window2" id="shay_dail_window5">
+							<h1>卖出交易 <img src="attms/img/close2.png" onclick="javascript:$('#shay_dail_window5').hide();" /></h1>
+							<div><i id="maichu_code"></i><b id="maichu_title"></b></div>
+							<h2><a href="javascript:;" class="a1" onclick="javascript:die1();"><img src="attms/img/down.png" alt="" /></a><input type="text" name="name" value="" id="maichu_newprice" readonly><a href="javascript:;" class="a2" onclick="javascript:zhang1();"><img src="attms/img/up.png" alt="" /></a><p style="clear:both;"></p></h2>
+							<h3><i>跌停 <b id="maichu_down"></b></i><b>涨停 <i id="maichu_up"></i></b></h3>
+							<div><input type="text" name="name" value="" style="width:30px;border:0 none;" id="kemai1"><b>可卖<strong id="maichu_dealnum"></strong></b></div>
+							<h4><a href="javascript:;" onclick="javascript:cang1(1);">全仓</a><a href="javascript:;" onclick="javascript:cang1(2);">半仓</a><a href="javascript:;" onclick="javascript:cang1(3);">1/3仓</a><a href="javascript:;" onclick="javascript:cang1(1.5);">2/3仓</a><a href="javascript:;" style="margin-right:0;" onclick="javascript:cang1(4);">1/4仓</a></h4>
+							<div><i id="maichu_total"></i></div>
+							<h5>建仓手续费(<i id="maichu_fee"></i>)</h5>
+							<h6><input type="password" name="name" value="" placeholder="请输入支付密码" id="maichu_pas"></h6>
+							<p>
+								<a href="javascript:;" class="a1" onclick="javascript:maichu_jiaoyi();">卖出</a>
+								<a href="javascript:;" class="a2" onclick="javascript:$('#shay_dail_window5').hide();" >取消</a>
+							</p>
+					</div>
+				</div>
+        <!-- <div title="行情" data-options="iconCls:'icon-large-icon2'" style="padding:0px;border:0 none;background-color:#000000;">
+					<h1 style="padding:5px 5px 6px;margin:0;height:35px;overflow:hidden;background-color:#1d1c1c;width:100%;z-index:1000000;position:fixed;" id="top_choose">
+						<a href="javascript:;" class="active"><img src="attms/img/1.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;"><img src="attms/img/2.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;"><img src="attms/img/3.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;"><img src="attms/img/5.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;"><img src="attms/img/6.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;"><img src="attms/img/7.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;"><img src="attms/img/8.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;"><img src="attms/img/10.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;"><img src="attms/img/11.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;"><img src="attms/img/12.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;"><img src="attms/img/13.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;"><img src="attms/img/14.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;"><img src="attms/img/15.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;"><img src="attms/img/16.png" style="vertical-align:middle;" /></a>
+						<a href="javascript:;"><img src="attms/img/17.png" style="vertical-align:middle;" /></a>
+						<i style="border-left:1px solid #ffffff;">买入交易</i>
+						<i>自选商品</i>
+					</h1>
+
+					<div class="k_detail1">
+							<div data-options="region:'center'" id="container2" style="height:98%;width:83%;float:left;"></div>
+							<div style="float:left;width:15%;height:100%;margin:0 1%;">
+									<h1 style="text-align:center;padding:0;margin:0;font-weight:normal;5%;line-height:33px;"><img src="attms/img/l.png" style="float:left;vertical-align:middle;position:relative;top:5px;cursor:pointer;" /><i style="font-style:normal;font-size:22px;color:#d3d307;">邮票指数</i><b style="font-weight:normal;font-size:22px;color:#07d3d3;">100023</b><img src="attms/img/r.png" style="float:right;vertical-align:middle;position:relative;top:5px;cursor:pointer;" /></h1>
+									<ul class="right_ul1">
+										<li style="border-bottom:1px solid #e03e3f;"><i>委比<strong>0</strong></i><i>委差<strong>0</strong></i></li>
+										<li><i>卖<b>3</b><strong>0</strong></i><i>&nbsp;<strong class="yellow">0</strong></i></li>
+										<li><i>卖<b>2</b><strong>0</strong></i><i>&nbsp;<strong class="yellow">0</strong></i></li>
+										<li style="border-bottom:1px solid #e03e3f;"><i>卖<b>1</b><strong>0</strong></i><i>&nbsp;<strong class="yellow">0</strong></i></li>
+										<li><i>买<b>3</b><strong>0</strong></i><i>&nbsp;<strong class="yellow">0</strong></i></li>
+										<li><i>买<b>2</b><strong>0</strong></i><i>&nbsp;<strong class="yellow">0</strong></i></li>
+										<li style="border-bottom:1px solid #e03e3f;"><i>买<b>1</b><strong>0</strong></i><i>&nbsp;<strong class="yellow">0</strong></i></li>
+
+										<li><i>最新<span class="red">44.58</span></i><i>均价<span>0</span></i></li>
+										<li><i>涨跌<span class="red">0.28</span></i><i>开盘价<span>44.29</span></i></li>
+										<li><i>幅度<span class="red">0.65%</span></i><i>最高价<span class="red">45.17</span></i></li>
+										<li><i>现量<span class="yellow">0</span></i><i>最低价<span class="green">43.66</span></i></li>
+										<li><i>总量<span class="yellow">4085879</span></i><i>量比<span class="yellow">1.11</span></i></li>
+										<li><i>成交额<span class="yellow">4185878914.13</span></i><i>换手率<span class="yellow">6.46%</span></i></li>
+										<li style="border-bottom:1px solid #e03e3f;"><i>昨收<span class="gray">44.29</span></i></li>
+
+										<li style="border-bottom:1px solid #e03e3f;"><i>外盘<span class="yellow">0</span></i><i>内盘<span class="yellow">0</span></i></li>
+
+										<li><span>14:56:46</span><strong>44.59</strong><b>1224</b></li>
+										<li><span>14:56:46</span><strong>44.59</strong><b>3</b></li>
+										<li><span>14:56:46</span><strong>44.59</strong><b>4</b></li>
+										<li><span>14:56:46</span><strong>44.59</strong><b>24</b></li>
+										<li><span>14:56:46</span><strong>44.59</strong><b>523</b></li>
+										<li><span>14:56:46</span><strong>44.59</strong><b>123</b></li>
+										<li><span>14:56:46</span><strong>44.59</strong><b>65</b></li>
+										<li><span>14:56:46</span><strong>44.59</strong><b>7</b></li>
+										<li><span>14:56:46</span><strong>44.59</strong><b>342</b></li>
+										<li><span>14:56:46</span><strong>44.59</strong><b>767</b></li>
+										<li><span>14:56:46</span><strong>44.59</strong><b>123</b></li>
+										<li><span>14:56:46</span><strong>44.59</strong><b>44</b></li>
+										<li><span>14:56:46</span><strong>44.59</strong><b>5</b></li>
+										<li><span>14:56:46</span><strong>44.59</strong><b>134</b></li>
+										<li><span>14:56:46</span><strong>44.59</strong><b>66</b></li>
+										<li><span>14:56:46</span><strong>44.59</strong><b>11</b></li>
+									</ul>
+							</div>
+							<h6 style="clear:both;"></h6>
+					</div>
+					<h1 class="shay_foot"><b><strong>连接</strong>2016-05-19 15:00</b></h1>
+        </div> -->
+				<a id="hangqing" onclick="javascript:$('.tabs-inner').css('background-color','#e03e3f');$(this).css('background-color','#981314');jiaoyi_detail();$('#shay_jiao_jilu').hide();$('#shay_jiao_mairu').show();" href="javascript:;" style="display:block;width:103px;position:absolute;top:0;z-index:99999999;height:40px;left:103px;line-height:40px;text-align:center;font-size:12px;text-decoration:none;color:#fff;"><img src="attms/img/hangqing.png" style="vertical-align:middle;position:relative;left:-20px;top:-1px;">行情</a>
+				<a id="user_name" href="javascript:;" onclick="javascript:jumpto();" style="display:block;padding:0 10px;position:absolute;top:0;z-index:99999999;height:40px;left:206px;line-height:40px;text-align:center;font-size:12px;text-decoration:none;color:#fff;">用户</a>
+				<a href="javascript:;" onclick="javascript:logo_out();" style="display:block;padding:0 10px;position:absolute;top:0;z-index:99999999;height:40px;right:0px;line-height:40px;text-align:center;font-size:12px;text-decoration:none;color:#fff;">登录/退出</a>
+				<!-- <div title="15997339_LVT" data-options="iconCls:'icon-large-icon3'" style="padding:10px;border:0 none;" onclick="javascript:window.location.href='login.html';"></div> -->
+  		</div>
+		</div>
+
+
+<script type="text/javascript">
+// 跳转
+function jumpto(){
+		window.open(""+RestApi+"?c=login&a=dologin&token="+localStorage.getItem('l_token')+"&account="+localStorage.getItem('l_account')+"&validity="+localStorage.getItem('l_validity')+"&id="+localStorage.getItem('l_id')+"");
+}
+// 退出登录
+function logo_out(){
+		$.post(RestApi, { c: 'login',a: 'logout'}, function(response){
+				var responseObj=$.parseJSON(response);
+				if(responseObj.code==200){
+						localStorage.setItem('user_name','用户');
+						window.location.href = 'login.html';
+				}else{
+						alert(responseObj.message);
+				}
+		});
+}
+/**Desktop初始化**/
+enryDesktop.init();
+
+/**Ajax数据交互**/
+enryDesktop.post({ c: 'index',a: 'index'},function(response){
+	var responseObj=$.parseJSON(response);
+	//alert(responseObj.code+":"+responseObj.message);
+});
+/**js自定义**/
+$('#top_choose>a').click(function(){
+  $(this).addClass('active').siblings('a').removeClass('active');
+});
+$('#top_choose>i').click(function(){
+  $(this).addClass('active').siblings('i').removeClass('active');
+	$(this).siblings('a').removeClass('active');
+});
+// $('.foot_choose>a').click(function(){
+//   $(this).addClass('active').siblings('a').removeClass('active');
+// });
+
+if(localStorage.getItem('user_name')){
+	$('#user_name').html(localStorage.getItem('user_name'));
+}
+
+$('#mai_num1').click(function(){
+	$(this).addClass('active');
+	$('#mai_num2').removeClass('active');
+	$('#mai_num3').removeClass('active');
+	$('#mai_num4').removeClass('active');
+});
+$('#mai_num2').click(function(){
+	$(this).addClass('active');
+	$('#mai_num1').addClass('active');
+	$('#mai_num3').removeClass('active');
+	$('#mai_num4').removeClass('active');
+});
+$('#mai_num3').click(function(){
+	$(this).addClass('active');
+	$('#mai_num1').addClass('active');
+	$('#mai_num2').addClass('active');
+	$('#mai_num4').removeClass('active');
+});
+$('#mai_num4').click(function(){
+	$(this).addClass('active');
+	$('#mai_num1').addClass('active');
+	$('#mai_num3').addClass('active');
+	$('#mai_num2').addClass('active');
+});
+$('.shay_dail_window2>h4>a').click(function(){
+	$(this).addClass('active').siblings('a').removeClass('active');
+});
+
+// 左移
+function zuoyi(){
+	$.post(RestApi, { c: 'trade',a: 'quotation',g_code:'',id:localStorage.getItem('big_id'),direction:'left'}, function(response){
+			console.log(response);
+			var responseObj=$.parseJSON(response);
+			console.log(responseObj.data);
+			if(responseObj.code==200){
+					localStorage.setItem('gcode',''+responseObj.data.g_code+'');
+					localStorage.setItem('big_id',responseObj.data.id);
+					$.post(RestApi, {c: 'trade',a:'release_detail',g_code:responseObj.data.g_code}, function(response){
+								console.log(response);
+								var responseObj=$.parseJSON(response);
+								if(responseObj.code==200){
+										// if(responseObj.data[0].title.length>5){
+										// 	$('#release_detail_title').html(responseObj.data[0].title.slice(0,6));
+										// }
+										$('#release_detail_code').html(responseObj.data[0].code);
+										$('#release_detail_newprice').html(responseObj.data[0].newprice);
+										$('#release_detail_avarageprice').html(responseObj.data[0].avarageprice);
+										$('#release_detail_range').html(responseObj.data[0].range);
+										$('#release_detail_openprice').html(responseObj.data[0].openprice);
+										$('#release_detail_rangerate').html(responseObj.data[0].rangerate);
+										$('#release_detail_highestprice').html(responseObj.data[0].highestprice);
+										$('#release_detail_surplus').html(responseObj.data[0].surplus);
+										$('#release_detail_lowestprice').html(responseObj.data[0].lowestprice);
+										$('#release_detail_total').html(responseObj.data[0].total);
+										$('#release_detail_dealnum').html(responseObj.data[0].dealnum);
+										$('#release_detail_closeprice').html(responseObj.data[0].closeprice);
+										$('#zongliang').html('总量 '+responseObj.data[0].total);
+										$('#xianliang').html('现量 '+responseObj.data[0].surplus);
+										$('#chengjiaoliang').html('成交量 '+responseObj.data[0].dealnum);
+
+										// 交易记录
+										if(responseObj.data[0].deal!=''){
+												for(var i=0,item='';i<responseObj.data[0].deal.length;i++){
+														item += '<li><span>'+responseObj.data[0].deal[i].deal_time+'<\/span><strong>'+responseObj.data[0].deal[i].t_price+'<\/strong><b>'+responseObj.data[0].deal[i].quantity+'<\/b><\/li>';
+												}
+												$('#chengjiao_jilu').html('<li><span style="color:#07d3d3;">时间<\/span><strong style="color:#07d3d3;">价格<\/strong><b style="color:#07d3d3;">数量<\/b><\/li>'+item);
+										}else{
+												$('#chengjiao_jilu').html('<li style="text-align:center;height:30px;line-height:30px;">暂无记录<\/li>');
+										}
+								}
+					});
+					var arr = responseObj.data.k_data;
+					var narr = [];
+					if(arr == null){
+							narr = [0,0,0,0];
+					}else{
+							for(var i=0;i<arr.length;i++){
+								var xarr = [];
+								for(var n=0;n<arr[i].length;n++){
+									xarr.push(parseInt(arr[i][n]));
+								}
+								narr.push(xarr);
+							}
+							console.log(narr);
+					}
+
+
+					$('#container1').highcharts('StockChart', {
+							title: {
+									text: '行情分时图'
+							},
+							rangeSelector : {
+									buttons : [{
+											type : 'hour',
+											count : 1,
+											text : '时'
+									}, {
+											type : 'day',
+											count : 1,
+											text : '日'
+									}, {
+											type : 'all',
+											count : 1,
+											text : '全部'
+									}],
+									selected : 1,
+									inputEnabled : false
+							},
+							series : [{
+									name : '行情',
+									type: 'candlestick',
+									data: narr,
+									tooltip: {
+											valueDecimals: 2
+									}
+							}]
+					});
+			}else{
+					alert(responseObj.message);
+			}
+	});
+}
+
+// k线左移
+function kzuoyi(){
+	$.post(RestApi, { c: 'trade',a: 'K_data',g_code:'',id:localStorage.getItem('big_id'),direction:'left'}, function(response){
+			console.log(response);
+			var responseObj=$.parseJSON(response);
+			console.log(responseObj.data);
+			if(responseObj.code==200){
+					localStorage.setItem('gcode',''+responseObj.data.g_code+'');
+					localStorage.setItem('big_id',responseObj.data.id);
+					$.post(RestApi, {c: 'trade',a:'release_detail',g_code:responseObj.data.g_code}, function(response){
+								console.log(response);
+								var responseObj=$.parseJSON(response);
+								if(responseObj.code==200){
+										// if(responseObj.data[0].title.length>5){
+										// 	$('#release_detail_title').html(responseObj.data[0].title.slice(0,6));
+										// }
+										$('#krelease_detail_code').html(responseObj.data[0].code);
+										$('#krelease_detail_newprice').html(responseObj.data[0].newprice);
+										$('#krelease_detail_avarageprice').html(responseObj.data[0].avarageprice);
+										$('#krelease_detail_range').html(responseObj.data[0].range);
+										$('#krelease_detail_openprice').html(responseObj.data[0].openprice);
+										$('#krelease_detail_rangerate').html(responseObj.data[0].rangerate);
+										$('#krelease_detail_highestprice').html(responseObj.data[0].highestprice);
+										$('#krelease_detail_surplus').html(responseObj.data[0].surplus);
+										$('#krelease_detail_lowestprice').html(responseObj.data[0].lowestprice);
+										$('#krelease_detail_total').html(responseObj.data[0].total);
+										$('#krelease_detail_dealnum').html(responseObj.data[0].dealnum);
+										$('#krelease_detail_closeprice').html(responseObj.data[0].closeprice);
+										$('#zongliang').html('总量 '+responseObj.data[0].total);
+										$('#xianliang').html('现量 '+responseObj.data[0].surplus);
+										$('#chengjiaoliang').html('成交量 '+responseObj.data[0].dealnum);
+
+										// 交易记录
+										if(responseObj.data[0].deal!=''){
+												for(var i=0,item='';i<responseObj.data[0].deal.length;i++){
+														item += '<li><span>'+responseObj.data[0].deal[i].deal_time+'<\/span><strong>'+responseObj.data[0].deal[i].t_price+'<\/strong><b>'+responseObj.data[0].deal[i].quantity+'<\/b><\/li>';
+												}
+												$('#kchengjiao_jilu').html('<li><span style="color:#07d3d3;">时间<\/span><strong style="color:#07d3d3;">价格<\/strong><b style="color:#07d3d3;">数量<\/b><\/li>'+item);
+										}else{
+												$('#kchengjiao_jilu').html('<li style="text-align:center;height:30px;line-height:30px;">暂无记录<\/li>');
+										}
+								}
+					});
+					var arr = responseObj.data.k_data;
+					var narr = [];
+					if(arr == null){
+							narr = [0,0,0,0];
+					}else{
+							for(var i=0;i<arr.length;i++){
+								var xarr = [];
+								for(var n=0;n<arr[i].length;n++){
+									xarr.push(parseInt(arr[i][n]));
+								}
+								narr.push(xarr);
+							}
+							console.log(narr);
+					}
+
+
+					Highcharts.stockChart('container3', {
+							rangeSelector: {
+									selected: 1
+							},
+							title: {
+									text: '成交价K线走势图'
+							},
+							series: [{
+									name: '成交价',
+									data: narr,
+									tooltip: {
+											valueDecimals: 2
+									}
+							}]
+					});
+			}else{
+					alert(responseObj.message);
+			}
+	});
+}
+
+// 右移
+function youyi(){
+	$.post(RestApi, { c: 'trade',a: 'quotation',g_code:'',id:localStorage.getItem('big_id'),direction:'right'}, function(response){
+			console.log(response);
+			var responseObj=$.parseJSON(response);
+			console.log(responseObj.data);
+			if(responseObj.code==200){
+					localStorage.setItem('gcode',''+responseObj.data.g_code+'');
+					localStorage.setItem('big_id',responseObj.data.id);
+					$.post(RestApi, {c: 'trade',a:'release_detail',g_code:responseObj.data.g_code}, function(response){
+								console.log(response);
+								var responseObj=$.parseJSON(response);
+								if(responseObj.code==200){
+										// if(responseObj.data[0].title.length>5){
+										// 	$('#release_detail_title').html(responseObj.data[0].title.slice(0,6));
+										// }
+										$('#release_detail_code').html(responseObj.data[0].code);
+										$('#release_detail_newprice').html(responseObj.data[0].newprice);
+										$('#release_detail_avarageprice').html(responseObj.data[0].avarageprice);
+										$('#release_detail_range').html(responseObj.data[0].range);
+										$('#release_detail_openprice').html(responseObj.data[0].openprice);
+										$('#release_detail_rangerate').html(responseObj.data[0].rangerate);
+										$('#release_detail_highestprice').html(responseObj.data[0].highestprice);
+										$('#release_detail_surplus').html(responseObj.data[0].surplus);
+										$('#release_detail_lowestprice').html(responseObj.data[0].lowestprice);
+										$('#release_detail_total').html(responseObj.data[0].total);
+										$('#release_detail_dealnum').html(responseObj.data[0].dealnum);
+										$('#release_detail_closeprice').html(responseObj.data[0].closeprice);
+										$('#zongliang').html('总量 '+responseObj.data[0].total);
+										$('#xianliang').html('现量 '+responseObj.data[0].surplus);
+										$('#chengjiaoliang').html('成交量 '+responseObj.data[0].dealnum);
+
+										// 交易记录
+										if(responseObj.data[0].deal!=''){
+												for(var i=0,item='';i<responseObj.data[0].deal.length;i++){
+														item += '<li><span>'+responseObj.data[0].deal[i].deal_time+'<\/span><strong>'+responseObj.data[0].deal[i].t_price+'<\/strong><b>'+responseObj.data[0].deal[i].quantity+'<\/b><\/li>';
+												}
+												$('#chengjiao_jilu').html('<li><span style="color:#07d3d3;">时间<\/span><strong style="color:#07d3d3;">价格<\/strong><b style="color:#07d3d3;">数量<\/b><\/li>'+item);
+										}else{
+												$('#chengjiao_jilu').html('<li style="text-align:center;height:30px;line-height:30px;">暂无记录<\/li>');
+										}
+								}
+					});
+					var arr = responseObj.data.k_data;
+					var narr = [];
+					if(arr == null){
+							narr = [0,0,0,0];
+					}else{
+							for(var i=0;i<arr.length;i++){
+								var xarr = [];
+								for(var n=0;n<arr[i].length;n++){
+									xarr.push(parseInt(arr[i][n]));
+								}
+								narr.push(xarr);
+							}
+							console.log(narr);
+					}
+
+
+					$('#container1').highcharts('StockChart', {
+							title: {
+									text: '行情分时图'
+							},
+							rangeSelector : {
+									buttons : [{
+											type : 'hour',
+											count : 1,
+											text : '时'
+									}, {
+											type : 'day',
+											count : 1,
+											text : '日'
+									}, {
+											type : 'all',
+											count : 1,
+											text : '全部'
+									}],
+									selected : 1,
+									inputEnabled : false
+							},
+							series : [{
+									name : '行情',
+									type: 'candlestick',
+									data: narr,
+									tooltip: {
+											valueDecimals: 2
+									}
+							}]
+					});
+			}else{
+					alert(responseObj.message);
+			}
+	});
+}
+
+
+// k线右移
+function kyouyi(){
+	$.post(RestApi, { c: 'trade',a: 'K_data',g_code:'',id:localStorage.getItem('big_id'),direction:'right'}, function(response){
+			console.log(response);
+			var responseObj=$.parseJSON(response);
+			console.log(responseObj.data);
+			if(responseObj.code==200){
+					localStorage.setItem('gcode',''+responseObj.data.g_code+'');
+					localStorage.setItem('big_id',responseObj.data.id);
+					$.post(RestApi, {c: 'trade',a:'release_detail',g_code:responseObj.data.g_code}, function(response){
+								console.log(response);
+								var responseObj=$.parseJSON(response);
+								if(responseObj.code==200){
+										// if(responseObj.data[0].title.length>5){
+										// 	$('#release_detail_title').html(responseObj.data[0].title.slice(0,6));
+										// }
+										$('#krelease_detail_code').html(responseObj.data[0].code);
+										$('#krelease_detail_newprice').html(responseObj.data[0].newprice);
+										$('#krelease_detail_avarageprice').html(responseObj.data[0].avarageprice);
+										$('#krelease_detail_range').html(responseObj.data[0].range);
+										$('#krelease_detail_openprice').html(responseObj.data[0].openprice);
+										$('#krelease_detail_rangerate').html(responseObj.data[0].rangerate);
+										$('#krelease_detail_highestprice').html(responseObj.data[0].highestprice);
+										$('#krelease_detail_surplus').html(responseObj.data[0].surplus);
+										$('#krelease_detail_lowestprice').html(responseObj.data[0].lowestprice);
+										$('#krelease_detail_total').html(responseObj.data[0].total);
+										$('#krelease_detail_dealnum').html(responseObj.data[0].dealnum);
+										$('#krelease_detail_closeprice').html(responseObj.data[0].closeprice);
+										$('#zongliang').html('总量 '+responseObj.data[0].total);
+										$('#xianliang').html('现量 '+responseObj.data[0].surplus);
+										$('#chengjiaoliang').html('成交量 '+responseObj.data[0].dealnum);
+
+										// 交易记录
+										if(responseObj.data[0].deal!=''){
+												for(var i=0,item='';i<responseObj.data[0].deal.length;i++){
+														item += '<li><span>'+responseObj.data[0].deal[i].deal_time+'<\/span><strong>'+responseObj.data[0].deal[i].t_price+'<\/strong><b>'+responseObj.data[0].deal[i].quantity+'<\/b><\/li>';
+												}
+												$('#kchengjiao_jilu').html('<li><span style="color:#07d3d3;">时间<\/span><strong style="color:#07d3d3;">价格<\/strong><b style="color:#07d3d3;">数量<\/b><\/li>'+item);
+										}else{
+												$('#kchengjiao_jilu').html('<li style="text-align:center;height:30px;line-height:30px;">暂无记录<\/li>');
+										}
+								}
+					});
+					var arr = responseObj.data.k_data;
+					var narr = [];
+					if(arr == null){
+							narr = [0,0,0,0];
+					}else{
+							for(var i=0;i<arr.length;i++){
+								var xarr = [];
+								for(var n=0;n<arr[i].length;n++){
+									xarr.push(parseInt(arr[i][n]));
+								}
+								narr.push(xarr);
+							}
+							console.log(narr);
+					}
+
+
+					Highcharts.stockChart('container3', {
+							rangeSelector: {
+									selected: 1
+							},
+							title: {
+									text: '成交价K线走势图'
+							},
+							series: [{
+									name: '成交价',
+									data: narr,
+									tooltip: {
+											valueDecimals: 2
+									}
+							}]
+					});
+			}else{
+					alert(responseObj.message);
+			}
+	});
+}
+</script>
+<!-- 菜单 menu -->
+<script type="text/javascript">
+	(function($){
+		function getParentMenu(rootMenu, menu){
+			return findParent(rootMenu);
+			function findParent(pmenu){
+				var p = undefined;
+				$(pmenu).find('.menu-item').each(function(){
+					if (!p && this.submenu){
+						if ($(this.submenu)[0] == $(menu)[0]){
+							p = pmenu;
+						} else {
+							p = findParent(this.submenu);
+						}
+					}
+				});
+				return p;
+			}
+		}
+		function getParentItem(pmenu, menu){
+			var item = undefined;
+			$(pmenu).find('.menu-item').each(function(){
+				if ($(this.submenu)[0] == $(menu)[0]){
+					item = $(this);
+					return false;
+				}
+			});
+			return item;
+		}
+
+		$.extend($.fn.menu.methods, {
+			enableNav: function(jq, rootMenu){
+				var firstItemSelector = '.menu-item:not(.menu-item-disabled):first';
+				var lastItemSelector = '.menu-item:not(.menu-item-disabled):last';
+				return jq.each(function(){
+					var menu = $(this);
+					rootMenu = $(rootMenu).length ? $(rootMenu) : menu;
+					menu.attr('tabindex','0').css('outline','none').unbind('.menunav').bind('keydown.menunav', function(e){
+						var item = $(this).find('.menu-active');
+						switch(e.keyCode){
+							case 13:  // enter
+								item.trigger('click');
+								break;
+							case 27:  // esc
+								rootMenu.find('.menu-active').trigger('mouseleave');
+								break;
+							case 38:  // up
+								var prev = item.length ? item.prevAll(firstItemSelector) : menu.find(lastItemSelector);
+								prev.trigger('mouseenter');
+								return false;
+							case 40:  // down
+								var next = item.length ? item.nextAll(firstItemSelector) : menu.find(firstItemSelector);
+								next.trigger('mouseenter');
+								return false;
+							case 37:  // left
+								var pmenu = getParentMenu(rootMenu, menu);
+								if (pmenu){
+									item.trigger('mouseleave');
+									var pitem = getParentItem(pmenu, menu);
+									if (pitem){
+										pitem.trigger('mouseenter');
+									}
+									pmenu.focus();
+								}
+								return false;
+							case 39:  // right
+								if (item.length && item[0].submenu){
+									$(item[0].submenu).menu('enableNav', rootMenu).find(firstItemSelector).trigger('mouseenter');
+									$(item[0].submenu).focus();
+								}
+								return false;
+						}
+					});
+				});
+			}
+		});
+	})(jQuery);
+
+	$(function(){
+		$('#mm').menu().menu('enableNav');
+		$('#mm1').menu().menu('enableNav');
+		$('#mm2').menu().menu('enableNav');
+		$('#mm3').menu().menu('enableNav');
+		$('#mm4').menu().menu('enableNav');
+		$(document).keydown(function(e){
+			if (e.altKey && e.keyCode == 87){
+				$('#mm').focus();
+				$('#mm1').focus();
+				$('#mm2').focus();
+				$('#mm3').focus();
+				$('#mm4').focus();
+			}
+		})
+	});
+
+	// 当前鼠标位置
+	function mouseMove(ev)
+	{
+	// Ev= ev || window.event;
+	var mousePos = mouseCoords(ev);
+	var btnNum = ev.button;
+	if(btnNum==2){
+	$('#mm').css('left',mousePos.x);
+	$('#mm1').css('left',mousePos.x);
+	$('#mm2').css('left',mousePos.x);
+	$('#mm3').css('left',mousePos.x);
+	$('#mm4').css('left',mousePos.x);
+	$('#mm').css('top',mousePos.y);
+	$('#mm1').css('top',mousePos.y);
+	$('#mm2').css('top',mousePos.y);
+	$('#mm3').css('top',mousePos.y);
+	$('#mm4').css('top',mousePos.y);
+}
+	}
+	function mouseCoords(ev)
+	{
+	if(ev.pageX || ev.pageY){
+	return {x:ev.pageX, y:ev.pageY};
+	}
+	return{
+	x:ev.clientX + document.body.scrollLeft - document.body.clientLeft,
+	y:ev.clientY + document.body.scrollTop - document.body.clientTop
+	};
+	}
+	document.onmousedown = mouseMove;
+
+	// document.oncontextmenu = function(e){
+	//     e.preventDefault();
+	// };
+	function youjian(id,bigid){
+			$('#mm').show();
+			localStorage.setItem('gcode',id);
+			localStorage.setItem('big_id',bigid);
+	}
+	function youjian1(id,bigid){
+			$('#mm1').show();
+			localStorage.setItem('gcode',id);
+			localStorage.setItem('big_id',bigid);
+	}
+	function youjian2(id,ctime,cate,bigid){
+			$('#mm2').show();
+			localStorage.setItem('gcode',id);
+			localStorage.setItem('ctime',ctime);
+			localStorage.setItem('cate',cate);
+			localStorage.setItem('big_id',bigid);
+	}
+	function youjian3(id,bigid){
+			$('#mm3').show();
+			localStorage.setItem('gcode',id);
+			localStorage.setItem('big_id',bigid);
+	}
+	function youjian4(id,ctime,cate,bigid){
+			$('#mm4').show();
+			localStorage.setItem('gcode',id);
+			localStorage.setItem('ctime',ctime);
+			localStorage.setItem('cate',cate);
+			localStorage.setItem('big_id',bigid);
+	}
+
+	function mairu(){
+		$.post(RestApi, {c: 'trade',a:'index',g_code:localStorage.getItem('gcode'),cate:'买'}, function(response){
+					console.log(response);
+					var responseObj=$.parseJSON(response);
+					if(responseObj.code==200){
+							$('#mairu_code').html(responseObj.data[0].code);
+							$('#mairu_title').html(responseObj.data[0].title);
+							$('#mairu_newprice').val(responseObj.data[0].newprice);
+							$('#mairu_down').html(responseObj.data[0].down);
+							$('#mairu_up').html(responseObj.data[0].up);
+							$('#mairu_dealnum').html(responseObj.data[0].dealnum);
+							$('#mairu_total').html(responseObj.data[0].total);
+							$('#mairu_fee').html(responseObj.data[0].fee);
+							$('#kemai').val(responseObj.data[0].dealnum);
+					}
+		});
+	}
+
+	function die(){
+		if(parseInt($('#mairu_newprice').val())>parseInt($('#mairu_down').html())){
+			var num = parseInt($('#mairu_newprice').val());
+			num = parseInt(num-10);
+			$('#mairu_newprice').val(num);
+			$('#mairu_total').html(parseInt($('#mairu_newprice').val())*parseInt($('#kemai').val()));
+		}
+	}
+	function zhang(){
+		if(parseInt($('#mairu_newprice').val())<parseInt($('#mairu_up').html())){
+			var num = parseInt($('#mairu_newprice').val());
+			num = parseInt(num+10);
+			$('#mairu_newprice').val(num);
+			$('#mairu_total').html(parseInt($('#mairu_newprice').val())*parseInt($('#kemai').val()));
+		}
+	}
+
+	$('#kemai').blur(function(){
+			if(parseInt($('#kemai').val())>parseInt($('#mairu_dealnum').html())){
+					$('#kemai').val('0');
+					$('#mairu_total').html('0');
+			}else {
+					$('#mairu_total').html(parseInt($('#mairu_newprice').val())*parseInt($('#kemai').val()));
+			}
+	});
+
+	function cang(n){
+			var total = parseInt($('#mairu_dealnum').html()/n);
+			$('#kemai').val(total);
+			$('#mairu_total').html(parseInt($('#mairu_newprice').val())*total);
+	}
+
+	function maichu(){
+		$.post(RestApi, {c: 'trade',a:'index',g_code:localStorage.getItem('gcode'),cate:'卖'}, function(response){
+					console.log(response);
+					var responseObj=$.parseJSON(response);
+					if(responseObj.code==200){
+							$('#maichu_code').html(responseObj.data[0].code);
+							$('#maichu_title').html(responseObj.data[0].title);
+							$('#maichu_newprice').val(responseObj.data[0].newprice);
+							$('#maichu_down').html(responseObj.data[0].down);
+							$('#maichu_up').html(responseObj.data[0].up);
+							$('#maichu_dealnum').html(responseObj.data[0].dealnum);
+							$('#maichu_total').html(responseObj.data[0].total);
+							$('#maichu_fee').html(responseObj.data[0].fee);
+							$('#kemai1').val(responseObj.data[0].dealnum);
+					}
+		});
+	}
+
+	function die1(){
+		if(parseInt($('#maichu_newprice').val())>parseInt($('#maichu_down').html())){
+			var num = parseInt($('#maichu_newprice').val());
+			num = parseInt(num-10);
+			$('#maichu_newprice').val(num);
+			$('#maichu_total').html(parseInt($('#maichu_newprice').val())*parseInt($('#kemai1').val()));
+		}
+	}
+	function zhang1(){
+		if(parseInt($('#maichu_newprice').val())<parseInt($('#maichu_up').html())){
+			var num = parseInt($('#maichu_newprice').val());
+			num = parseInt(num+10);
+			$('#maichu_newprice').val(num);
+			$('#maichu_total').html(parseInt($('#maichu_newprice').val())*parseInt($('#kemai1').val()));
+		}
+	}
+
+	$('#kemai1').blur(function(){
+			if(parseInt($('#kemai1').val())>parseInt($('#maichu_dealnum').html())){
+					$('#kemai1').val('0');
+					$('#maichu_total').html('0');
+			}else {
+					$('#maichu_total').html(parseInt($('#maichu_newprice').val())*parseInt($('#kemai1').val()));
+			}
+	});
+
+	function cang1(n){
+			var total = parseInt($('#maichu_dealnum').html()/n);
+			$('#kemai1').val(total);
+			$('#maichu_total').html(parseInt($('#maichu_newprice').val())*total);
+	}
+
+	// 买入
+	function mairu_jiaoyi(){
+			$.post(RestApi, {c: 'trade',a:'buy',g_code:localStorage.getItem('gcode'),quantity:$('#kemai').val(),price:$('#mairu_newprice').val(),tpassword:$('#mairu_pas').val()}, function(response){
+						console.log(response);
+						var responseObj=$.parseJSON(response);
+						if(responseObj.code == 200){
+								alert(responseObj.message);
+								setTimeout(function(){
+										$('#shay_dail_window4').hide();
+										$('#shay_jiao_jilu').click();
+								},1000);
+						}else{
+								alert(responseObj.message);
+						}
+			});
+	}
+
+	// 卖出
+	function maichu_jiaoyi(){
+			$.post(RestApi, {c: 'trade',a:'sold',g_code:localStorage.getItem('gcode'),quantity:$('#kemai1').val(),price:$('#maichu_newprice').val(),tpassword:$('#maichu_pas').val()}, function(response){
+						console.log(response);
+						var responseObj=$.parseJSON(response);
+						if(responseObj.code == 200){
+								alert(responseObj.message);
+								setTimeout(function(){
+										$('#shay_dail_window5').hide();
+										$('#shay_jiao_jilu').click();
+								},1000);
+						}else{
+								alert(responseObj.message);
+						}
+			});
+	}
+
+
+
+	function jiaoyi_detail(){
+			$('.jiaoyi_li').hide();
+			$('.k_detail').show();
+			$('.kk').hide();
+			$.post(RestApi, {c: 'trade',a:'release_detail',g_code:localStorage.getItem('gcode')}, function(response){
+						console.log(response);
+						var responseObj=$.parseJSON(response);
+						if(responseObj.code==200){
+								// if(responseObj.data[0].title.length>5){
+								// 	$('#release_detail_title').html(responseObj.data[0].title.slice(0,6));
+								// }
+								$('#release_detail_code').html(responseObj.data[0].code);
+								$('#release_detail_newprice').html(responseObj.data[0].newprice);
+								$('#release_detail_avarageprice').html(responseObj.data[0].avarageprice);
+								$('#release_detail_range').html(responseObj.data[0].range);
+								$('#release_detail_openprice').html(responseObj.data[0].openprice);
+								$('#release_detail_rangerate').html(responseObj.data[0].rangerate);
+								$('#release_detail_highestprice').html(responseObj.data[0].highestprice);
+								$('#release_detail_surplus').html(responseObj.data[0].surplus);
+								$('#release_detail_lowestprice').html(responseObj.data[0].lowestprice);
+								$('#release_detail_total').html(responseObj.data[0].total);
+								$('#release_detail_dealnum').html(responseObj.data[0].dealnum);
+								$('#release_detail_closeprice').html(responseObj.data[0].closeprice);
+								$('#zongliang').html('总量 '+responseObj.data[0].total);
+								$('#xianliang').html('现量 '+responseObj.data[0].surplus);
+								$('#chengjiaoliang').html('成交量 '+responseObj.data[0].dealnum);
+								localStorage.setItem('big_id',responseObj.data[0].id);
+
+
+								// 交易记录
+								if(responseObj.data[0].deal!=''){
+										for(var i=0,item='';i<responseObj.data[0].deal.length;i++){
+												item += '<li><span>'+responseObj.data[0].deal[i].deal_time+'<\/span><strong>'+responseObj.data[0].deal[i].t_price+'<\/strong><b>'+responseObj.data[0].deal[i].quantity+'<\/b><\/li>';
+										}
+										$('#chengjiao_jilu').html('<li><span style="color:#07d3d3;">时间<\/span><strong style="color:#07d3d3;">价格<\/strong><b style="color:#07d3d3;">数量<\/b><\/li>'+item);
+								}else{
+										$('#chengjiao_jilu').html('<li style="text-align:center;height:30px;line-height:30px;">暂无记录<\/li>');
+								}
+						}
+			});
+
+			$.post(RestApi, { c: 'trade',a: 'quotation',g_code:localStorage.getItem('gcode')}, function(response){
+	        console.log(response);
+	        var responseObj=$.parseJSON(response);
+					console.log(responseObj.data);
+	        if(responseObj.code==200){
+							var arr = responseObj.data.k_data;
+							var narr = [];
+							if(arr == null){
+									narr = [0,0,0,0];
+							}else{
+									for(var i=0;i<arr.length;i++){
+										var xarr = [];
+										for(var n=0;n<arr[i].length;n++){
+											xarr.push(parseInt(arr[i][n]));
+										}
+										narr.push(xarr);
+									}
+									console.log(narr);
+							}
+
+
+	            $('#container1').highcharts('StockChart', {
+	                title: {
+	                    text: '行情分时图'
+	                },
+	                rangeSelector : {
+	                    buttons : [{
+	                        type : 'hour',
+	                        count : 1,
+	                        text : '时'
+	                    }, {
+	                        type : 'day',
+	                        count : 1,
+	                        text : '日'
+	                    }, {
+	                        type : 'all',
+	                        count : 1,
+	                        text : '全部'
+	                    }],
+	                    selected : 1,
+	                    inputEnabled : false
+	                },
+	                series : [{
+	                    name : '行情',
+	                    type: 'candlestick',
+											data: narr,
+	                    tooltip: {
+	                        valueDecimals: 2
+	                    }
+	                }]
+	            });
+	        }
+	    });
+	}
+
+
+	function kk_xian(){
+			$('.jiaoyi_li').hide();
+			$('.k_detail').hide();
+			$('.kk').show();
+
+			$.post(RestApi, {c: 'trade',a:'release_detail',g_code:localStorage.getItem('gcode')}, function(response){
+						console.log(response);
+						var responseObj=$.parseJSON(response);
+						if(responseObj.code==200){
+								// if(responseObj.data[0].title.length>5){
+								// 	$('#release_detail_title').html(responseObj.data[0].title.slice(0,6));
+								// }
+								$('#krelease_detail_code').html(responseObj.data[0].code);
+								$('#krelease_detail_newprice').html(responseObj.data[0].newprice);
+								$('#krelease_detail_avarageprice').html(responseObj.data[0].avarageprice);
+								$('#krelease_detail_range').html(responseObj.data[0].range);
+								$('#krelease_detail_openprice').html(responseObj.data[0].openprice);
+								$('#krelease_detail_rangerate').html(responseObj.data[0].rangerate);
+								$('#krelease_detail_highestprice').html(responseObj.data[0].highestprice);
+								$('#krelease_detail_surplus').html(responseObj.data[0].surplus);
+								$('#krelease_detail_lowestprice').html(responseObj.data[0].lowestprice);
+								$('#krelease_detail_total').html(responseObj.data[0].total);
+								$('#krelease_detail_dealnum').html(responseObj.data[0].dealnum);
+								$('#krelease_detail_closeprice').html(responseObj.data[0].closeprice);
+								$('#zongliang').html('总量 '+responseObj.data[0].total);
+								$('#xianliang').html('现量 '+responseObj.data[0].surplus);
+								$('#chengjiaoliang').html('成交量 '+responseObj.data[0].dealnum);
+								localStorage.setItem('big_id',responseObj.data[0].id);
+
+								// 交易记录
+								if(responseObj.data[0].deal!=''){
+										for(var i=0,item='';i<responseObj.data[0].deal.length;i++){
+												item += '<li><span>'+responseObj.data[0].deal[i].deal_time+'<\/span><strong>'+responseObj.data[0].deal[i].t_price+'<\/strong><b>'+responseObj.data[0].deal[i].quantity+'<\/b><\/li>';
+										}
+										$('#kchengjiao_jilu').html('<li><span style="color:#07d3d3;">时间<\/span><strong style="color:#07d3d3;">价格<\/strong><b style="color:#07d3d3;">数量<\/b><\/li>'+item);
+								}else{
+										$('#kchengjiao_jilu').html('<li style="text-align:center;height:30px;line-height:30px;">暂无记录<\/li>');
+								}
+						}
+			});
+			$.post(RestApi, { c: 'trade',a: 'K_data',g_code:localStorage.getItem('gcode')}, function(response){
+	        console.log(response);
+	        var responseObj=$.parseJSON(response);
+					console.log(responseObj.data);
+	        if(responseObj.code==200){
+							var arr = responseObj.data.k_data;
+							var narr = [];
+							if(arr == null){
+									narr = [0,0,0,0];
+							}else{
+									for(var i=0;i<arr.length;i++){
+										var xarr = [];
+										for(var n=0;n<arr[i].length;n++){
+											xarr.push(parseInt(arr[i][n]));
+										}
+										narr.push(xarr);
+									}
+									console.log(narr);
+							}
+
+							Highcharts.stockChart('container3', {
+			            rangeSelector: {
+			                selected: 1
+			            },
+			            title: {
+			                text: '成交价K线走势图'
+			            },
+			            series: [{
+			                name: '成交价',
+			                data: narr,
+			                tooltip: {
+			                    valueDecimals: 2
+			                }
+			            }]
+			        });
+	        }
+	    });
+
+
+		// 	$.getJSON('https://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function (data) {
+    //     // Create the chart
+    //     Highcharts.stockChart('container3', {
+		//
+		//
+    //         rangeSelector: {
+    //             selected: 1
+    //         },
+		//
+    //         title: {
+    //             text: 'AAPL Stock Price'
+    //         },
+		//
+    //         series: [{
+    //             name: 'AAPL',
+    //             data: data,
+    //             tooltip: {
+    //                 valueDecimals: 2
+    //             }
+    //         }]
+    //     });
+    // });
+	}
+
+
+
+
+
+
+
+	// 导航栏方法
+	// 分时
+	function daohang_fenshi(range){
+			$('.jiaoyi_li').hide();
+			$('.k_detail').show();
+			$('.kk').hide();
+			var code = '';
+			if(localStorage.getItem('gcode')){
+					code = localStorage.getItem('gcode');
+			}else{
+					code = localStorage.getItem('gcode_fir');
+			}
+			$.post(RestApi, {c: 'trade',a:'release_detail',g_code:code}, function(response){
+						console.log(response);
+						var responseObj=$.parseJSON(response);
+						if(responseObj.code==200){
+								// if(responseObj.data[0].title.length>5){
+								// 	$('#release_detail_title').html(responseObj.data[0].title.slice(0,6));
+								// }
+								$('#release_detail_code').html(responseObj.data[0].code);
+								$('#release_detail_newprice').html(responseObj.data[0].newprice);
+								$('#release_detail_avarageprice').html(responseObj.data[0].avarageprice);
+								$('#release_detail_range').html(responseObj.data[0].range);
+								$('#release_detail_openprice').html(responseObj.data[0].openprice);
+								$('#release_detail_rangerate').html(responseObj.data[0].rangerate);
+								$('#release_detail_highestprice').html(responseObj.data[0].highestprice);
+								$('#release_detail_surplus').html(responseObj.data[0].surplus);
+								$('#release_detail_lowestprice').html(responseObj.data[0].lowestprice);
+								$('#release_detail_total').html(responseObj.data[0].total);
+								$('#release_detail_dealnum').html(responseObj.data[0].dealnum);
+								$('#release_detail_closeprice').html(responseObj.data[0].closeprice);
+								$('#zongliang').html('总量 '+responseObj.data[0].total);
+								$('#xianliang').html('现量 '+responseObj.data[0].surplus);
+								$('#chengjiaoliang').html('成交量 '+responseObj.data[0].dealnum);
+								localStorage.setItem('big_id',responseObj.data[0].id);
+
+								// 交易记录
+								if(responseObj.data[0].deal!=''){
+										for(var i=0,item='';i<responseObj.data[0].deal.length;i++){
+												item += '<li><span>'+responseObj.data[0].deal[i].deal_time+'<\/span><strong>'+responseObj.data[0].deal[i].t_price+'<\/strong><b>'+responseObj.data[0].deal[i].quantity+'<\/b><\/li>';
+										}
+										$('#chengjiao_jilu').html('<li><span style="color:#07d3d3;">时间<\/span><strong style="color:#07d3d3;">价格<\/strong><b style="color:#07d3d3;">数量<\/b><\/li>'+item);
+								}else{
+										$('#chengjiao_jilu').html('<li style="text-align:center;height:30px;line-height:30px;">暂无记录<\/li>');
+								}
+						}
+			});
+
+			$.post(RestApi, { c: 'trade',a: 'quotation',g_code:code,range:range}, function(response){
+	        console.log(response);
+	        var responseObj=$.parseJSON(response);
+					console.log(responseObj.data);
+	        if(responseObj.code==200){
+							var arr = responseObj.data.k_data;
+							var narr = [];
+							if(arr == null){
+									narr = [0,0,0,0];
+							}else{
+									for(var i=0;i<arr.length;i++){
+										var xarr = [];
+										for(var n=0;n<arr[i].length;n++){
+											xarr.push(parseInt(arr[i][n]));
+										}
+										narr.push(xarr);
+									}
+									console.log(narr);
+							}
+
+
+	            $('#container1').highcharts('StockChart', {
+	                title: {
+	                    text: '行情分时图'
+	                },
+	                rangeSelector : {
+	                    buttons : [{
+	                        type : 'hour',
+	                        count : 1,
+	                        text : '时'
+	                    }, {
+	                        type : 'day',
+	                        count : 1,
+	                        text : '日'
+	                    }, {
+	                        type : 'all',
+	                        count : 1,
+	                        text : '全部'
+	                    }],
+	                    selected : 1,
+	                    inputEnabled : false
+	                },
+	                series : [{
+	                    name : '行情',
+	                    type: 'candlestick',
+											data: narr,
+	                    tooltip: {
+	                        valueDecimals: 2
+	                    }
+	                }]
+	            });
+	        }
+	    });
+	}
+
+	// 导航K线
+	function kdaohang(range){
+			$('.jiaoyi_li').hide();
+			$('.k_detail').hide();
+			$('.kk').show();
+			var code = '';
+			if(localStorage.getItem('gcode')){
+					code = localStorage.getItem('gcode');
+			}else{
+					code = localStorage.getItem('gcode_fir');
+			}
+			$.post(RestApi, {c: 'trade',a:'release_detail',g_code:code}, function(response){
+						console.log(response);
+						var responseObj=$.parseJSON(response);
+						if(responseObj.code==200){
+								// if(responseObj.data[0].title.length>5){
+								// 	$('#release_detail_title').html(responseObj.data[0].title.slice(0,6));
+								// }
+								$('#krelease_detail_code').html(responseObj.data[0].code);
+								$('#krelease_detail_newprice').html(responseObj.data[0].newprice);
+								$('#krelease_detail_avarageprice').html(responseObj.data[0].avarageprice);
+								$('#krelease_detail_range').html(responseObj.data[0].range);
+								$('#krelease_detail_openprice').html(responseObj.data[0].openprice);
+								$('#krelease_detail_rangerate').html(responseObj.data[0].rangerate);
+								$('#krelease_detail_highestprice').html(responseObj.data[0].highestprice);
+								$('#krelease_detail_surplus').html(responseObj.data[0].surplus);
+								$('#krelease_detail_lowestprice').html(responseObj.data[0].lowestprice);
+								$('#krelease_detail_total').html(responseObj.data[0].total);
+								$('#krelease_detail_dealnum').html(responseObj.data[0].dealnum);
+								$('#krelease_detail_closeprice').html(responseObj.data[0].closeprice);
+								$('#zongliang').html('总量 '+responseObj.data[0].total);
+								$('#xianliang').html('现量 '+responseObj.data[0].surplus);
+								$('#chengjiaoliang').html('成交量 '+responseObj.data[0].dealnum);
+								localStorage.setItem('big_id',responseObj.data[0].id);
+
+								// 交易记录
+								if(responseObj.data[0].deal!=''){
+										for(var i=0,item='';i<responseObj.data[0].deal.length;i++){
+												item += '<li><span>'+responseObj.data[0].deal[i].deal_time+'<\/span><strong>'+responseObj.data[0].deal[i].t_price+'<\/strong><b>'+responseObj.data[0].deal[i].quantity+'<\/b><\/li>';
+										}
+										$('#kchengjiao_jilu').html('<li><span style="color:#07d3d3;">时间<\/span><strong style="color:#07d3d3;">价格<\/strong><b style="color:#07d3d3;">数量<\/b><\/li>'+item);
+								}else{
+										$('#kchengjiao_jilu').html('<li style="text-align:center;height:30px;line-height:30px;">暂无记录<\/li>');
+								}
+						}
+			});
+
+
+
+			$.post(RestApi, { c: 'trade',a: 'K_data',g_code:code,range:range}, function(response){
+					console.log(response);
+					var responseObj=$.parseJSON(response);
+					console.log(responseObj.data);
+					if(responseObj.code==200){
+							var arr = responseObj.data.k_data;
+							var narr = [];
+							if(arr == null){
+									narr = [0,0,0,0];
+							}else{
+									for(var i=0;i<arr.length;i++){
+										var xarr = [];
+										for(var n=0;n<arr[i].length;n++){
+											xarr.push(parseInt(arr[i][n]));
+										}
+										narr.push(xarr);
+									}
+									console.log(narr);
+							}
+
+							Highcharts.stockChart('container3', {
+									rangeSelector: {
+											selected: 1
+									},
+									title: {
+											text: '成交价K线走势图'
+									},
+									series: [{
+											name: '成交价',
+											data: narr,
+											tooltip: {
+													valueDecimals: 2
+											}
+									}]
+							});
+					}
+			});
+	}
+
+
+	// 持仓记录
+	$('#shay_jiao_jilu').click(function(){
+		$.post(RestApi, {c: 'trade',a:'holdlist'}, function(response){
+					console.log(response);
+					var responseObj=$.parseJSON(response);
+					if(responseObj.code==200){
+							for(var i=0,item='';i<responseObj.data.length;i++){
+									var shares = responseObj.data[i].shares;
+									var share = '';
+									if(shares.indexOf('-')>-1){
+											share = '<i class="i30 green">'+shares+'<\/i>&nbsp;';
+									}else{
+											share = '<i class="i30 red">+'+shares+'<\/i>&nbsp;';
+									}
+									var zt = responseObj.data[i].is_del;
+									var sta = responseObj.data[i].status;
+									var is_del = '';
+									var tanchu = '';
+									if(zt == 0){
+											if(sta == 0){
+													is_del = '已报';
+													tanchu = '<li ondblclick="javascript:jiaoyi_detail();" onclick="javascript:$(this).addClass(\'active\').siblings().removeClass(\'active\');" onmousedown="javascript:youjian2(\''+responseObj.data[i].code+'\',\''+responseObj.data[i].ctime+'\',\''+responseObj.data[i].cate+'\','+responseObj.data[i].id+');">';
+											}else{
+													is_del = '已成';
+													tanchu = '<li ondblclick="javascript:jiaoyi_detail();" onclick="javascript:$(this).addClass(\'active\').siblings().removeClass(\'active\');" onmousedown="javascript:youjian3(\''+responseObj.data[i].code+'\','+responseObj.data[i].id+');">';
+											}
+									}else{
+											is_del = '已撤单';
+											tanchu = '<li ondblclick="javascript:jiaoyi_detail();" onclick="javascript:$(this).addClass(\'active\').siblings().removeClass(\'active\');" onmousedown="javascript:youjian4(\''+responseObj.data[i].code+'\',\''+responseObj.data[i].ctime+'\',\''+responseObj.data[i].cate+'\','+responseObj.data[i].id+');">';
+									}
+									item += tanchu+'<i class="i1">'+parseInt(i+1)+'<\/i>&nbsp;<i class="i2 yellow">'+responseObj.data[i].code+'<\/i>&nbsp;<i class="i3 yellow">'+responseObj.data[i].title+'<\/i>&nbsp;<i class="i30">'+responseObj.data[i].price+'<\/i>&nbsp;'+share+'<i class="i30">'+responseObj.data[i].hold+'<\/i>&nbsp;<i class="i30">'+responseObj.data[i].available+'<\/i>&nbsp;<i class="i30 green">'+responseObj.data[i].newprice+'<\/i>&nbsp;<i class="i30 yellow">'+responseObj.data[i].cost+'<\/i>&nbsp;<i class="i30">'+is_del+'<\/i>&nbsp;<\/li>';
+							}
+							$('#jiaoyi_list1').html('<li style="border-bottom:1px solid #e03e3f;position:fixed;width:98.5%;z-index:10000;background-color:#000;border-top:1px solid #e03e3f;">'+
+								'<i class="i1">&nbsp;</i>&nbsp;'+
+								'<i class="i2 yellow">代码<img src="attms/img/top.png" alt="" /></i>&nbsp;'+
+								'<i class="i3">商品名称</i>&nbsp;'+
+								'<i class="i30">市值</i>&nbsp;'+
+								'<i class="i30">盈亏</i>&nbsp;'+
+								'<i class="i30">持仓</i>&nbsp;'+
+								'<i class="i30">可用</i>&nbsp;'+
+								'<i class="i30">现价</i>&nbsp;'+
+								'<i class="i30">成本</i>&nbsp;'+
+								'<i class="i30">状态</i>&nbsp;'+
+							'</li>'+item);
+					}
+			});
+			$('#jiaoyi_list1').show();
+			$('#jiaoyi_list2').hide();
+			$('#jiaoyi_list3').hide();
+			$('#jiaoyi_list').hide();
+			$('.k_detail').hide();
+			$('.kk').hide();
+	});
+
+	// 持仓查询
+	function cc_cx(){
+		$.post(RestApi, {c: 'trade',a:'holdetail'}, function(response){
+					console.log(response);
+					var responseObj=$.parseJSON(response);
+					if(responseObj.code==200){
+							for(var i=0,item='';i<responseObj.data.length;i++){
+									var type = responseObj.data[i].type;
+									if(type == '委托撤单'){
+											type = '<i class="i31 red">'+responseObj.data[i].type+'<\/i>';
+									}else{
+											type = '<i class="i31 green">'+responseObj.data[i].type+'<\/i>';
+									}
+									item += '<li><i class="i1">'+parseInt(i+1)+'<\/i><i class="i2 yellow">'+responseObj.data[i].code+'<\/i><i class="i3 yellow">'+responseObj.data[i].title+'<\/i><i class="i31">'+responseObj.data[i].cate+'<\/i>'+type+'<i class="i31">'+responseObj.data[i].num+'<\/i><i class="i31">'+responseObj.data[i].turnover+'<\/i><i class="i31">'+responseObj.data[i].price+'<\/i><i class="i31 yellow">'+responseObj.data[i].t_price+'<\/i><i class="i31">'+responseObj.data[i].fee+'<\/i><i class="i31 green">'+responseObj.data[i].total+'<\/i><i class="i25 yellow">'+responseObj.data[i].ctime+'<\/i><i class="i25">'+responseObj.data[i].deal_time+'<\/i><\/li>';
+							}
+							$('#jiaoyi_list2').html('<li style="border-bottom:1px solid #e03e3f;position:fixed;width:98.5%;z-index:10000;background-color:#000;border-top:1px solid #e03e3f;">'+
+								'<i class="i1">&nbsp;</i>'+
+								'<i class="i2 yellow">代码<img src="attms/img/top.png" alt="" /></i>'+
+								'<i class="i3">商品名称</i>'+
+								'<i class="i31">方向</i>'+
+								'<i class="i31">操作类型</i>'+
+								'<i class="i31">数量</i>'+
+								'<i class="i31">交易额</i>'+
+								'<i class="i31">委托价</i>'+
+								'<i class="i31">成交价</i>'+
+								'<i class="i31">手续费</i>'+
+								'<i class="i31">费用合计</i>'+
+								'<i class="i25">委托时间</i>'+
+								'<i class="i25">成交时间</i>'+
+							'</li>'+item);
+					}
+		});
+		$('#jiaoyi_list1').hide();
+		$('#jiaoyi_list2').show();
+		$('#jiaoyi_list3').hide();
+		$('#jiaoyi_list').hide();
+	}
+
+	// 交易撤单
+	function chedan(){
+		$.post(RestApi, {c: 'trade',a:'cancle_deal',g_code:localStorage.getItem('gcode'),ctime:localStorage.getItem('ctime'),cate:localStorage.getItem('cate')}, function(response){
+					console.log(response);
+					var responseObj=$.parseJSON(response);
+					if(responseObj.code==200){
+							alert(responseObj.message);
+							setTimeout(function(){
+									$('#shay_jiao_jilu').click();
+							},1000);
+					}
+		});
+	}
+
+	// 交易删除
+	function del_jiaoyi(){
+		$.post(RestApi, {c: 'trade',a:'del_deal',g_code:localStorage.getItem('gcode'),ctime:localStorage.getItem('ctime'),cate:localStorage.getItem('cate')}, function(response){
+					console.log(response);
+					var responseObj=$.parseJSON(response);
+					if(responseObj.code==200){
+							alert(responseObj.message);
+							setTimeout(function(){
+									$('#shay_jiao_jilu').click();
+							},1000);
+					}
+		});
+	}
+
+	// 自选商品
+	$('#shay_jiao_zixuan').click(function(){
+		$.post(RestApi, {c: 'trade',a:'optionalist'}, function(response){
+					console.log(response);
+					var responseObj=$.parseJSON(response);
+					if(responseObj.code==200){
+							for(var i=0,item='';i<responseObj.data.length;i++){
+									var openprice = responseObj.data[i].openprice;
+									var newprice = responseObj.data[i].newprice;
+									var range = responseObj.data[i].range;
+									var rangerate = responseObj.data[i].rangerate;
+									var highestprice = responseObj.data[i].highestprice;
+									var lowestprice = responseObj.data[i].lowestprice;
+									var closeprice = responseObj.data[i].closeprice;
+									var avarageprice = responseObj.data[i].avarageprice;
+									var surplus = responseObj.data[i].surplus;
+									if(responseObj.data[i].openprice != ''){
+											openprice = responseObj.data[i].openprice;
+									}else{
+											openprice = '——';
+									}
+									if(responseObj.data[i].newprice != ''){
+											newprice = responseObj.data[i].newprice;
+									}else{
+											newprice = '——';
+									}
+									if(responseObj.data[i].range != ''){
+											if(parseInt(range)>=0){
+												range = '<i class="i6 red">+'+responseObj.data[i].range+'<\/i>';
+											}else{
+												range = '<i class="i6 green">'+responseObj.data[i].range+'<\/i>';
+											}
+									}else{
+											range = '<i class="i6">——<\/i>';
+									}
+									if(responseObj.data[i].rangerate != ''){
+											if(parseInt(rangerate)>=0){
+												rangerate = '<i class="i7 red">+'+responseObj.data[i].rangerate+'<\/i>';
+											}else{
+												rangerate = '<i class="i7 green">'+responseObj.data[i].rangerate+'<\/i>';
+											}
+									}else{
+											rangerate = '<i class="i7">——<\/i>';
+									}
+									if(responseObj.data[i].highestprice != ''){
+											highestprice = responseObj.data[i].highestprice;
+									}else{
+											highestprice = '——';
+									}
+									if(responseObj.data[i].lowestprice != ''){
+											lowestprice = responseObj.data[i].lowestprice;
+									}else{
+											lowestprice = '——';
+									}
+									if(responseObj.data[i].closeprice != ''){
+											closeprice = responseObj.data[i].closeprice;
+									}else{
+											closeprice = '——';
+									}
+									if(responseObj.data[i].avarageprice != ''){
+											avarageprice = responseObj.data[i].avarageprice;
+									}else{
+											avarageprice = '——';
+									}
+									if(responseObj.data[i].surplus != ''){
+											surplus = responseObj.data[i].surplus;
+									}else{
+											surplus = '——';
+									}
+									item += '<li ondblclick="javascript:jiaoyi_detail();" onclick="javascript:$(this).addClass(\'active\').siblings().removeClass(\'active\');" onmousedown="javascript:youjian1(\''+responseObj.data[i].code+'\','+responseObj.data[i].id+');"><i class="i1">'+responseObj.data[i].id+'<\/i><i class="i2 yellow">'+responseObj.data[i].code+'</\i><i class="i3 yellow">'+responseObj.data[i].title+'<\/i><i class="i4">'+openprice+'<\/i><i class="i5 red">'+newprice+'<\/i>'+range+rangerate+'<i class="i8 red">'+highestprice+'<\/i><i class="i9 green">'+lowestprice+'<\/i><i class="i10">'+closeprice+'<\/i><i class="i12">'+avarageprice+'<\/i><i class="i13">'+surplus+'<\/i></li>';
+							}
+							$('#jiaoyi_list3').html('<li style="border-bottom:1px solid #e03e3f;position:fixed;width:98.5%;z-index:10000;background-color:#000;border-top:1px solid #e03e3f;"><i class="i1">&nbsp;<\/i><i class="i2 yellow">代码<img src="attms\/img\/top.png" alt="" \/><\/i><i class="i3">商品名称<\/i><i class="i4">开盘价<\/i><i class="i5">最新<\/i><i class="i6">涨跌<\/i><i class="i7">幅度<\/i><i class="i8">最高价<\/i><i class="i9">最低价<\/i><i class="i10">昨收盘价<\/i><i class="i12">均价<\/i><i class="i13">现量<\/i>'+item);
+					}
+		});
+		$('#jiaoyi_list1').hide();
+		$('#jiaoyi_list2').hide();
+		$('#jiaoyi_list3').show();
+		$('#jiaoyi_list').hide();
+		$('.k_detail').hide();
+		$('.kk').hide();
+	});
+</script>
+
+<!-- 接口部分 -->
+<script type="text/javascript">
+// 加入自选
+function add_zixuan(){
+	$.post(RestApi, {c: 'trade',a:'add_optional',g_code:localStorage.getItem('gcode')}, function(response){
+				console.log(response);
+				var responseObj=$.parseJSON(response);
+				if(responseObj.code==200){
+						alert(responseObj.message);
+				}else{
+						alert(responseObj.message);
+				}
+	});
+}
+// 取消自选
+function del_zixuan(){
+	$.post(RestApi, {c: 'trade',a:'del_optional',g_code:localStorage.getItem('gcode')}, function(response){
+				console.log(response);
+				var responseObj=$.parseJSON(response);
+				if(responseObj.code==200){
+						alert(responseObj.message);
+				}else{
+						alert(responseObj.message);
+				}
+	});
+}
+// 列表页
+// 动态拉取数据
+var enryROOM_msgtype = 'text';//text,photo,audio
+var enryROOM_port = 1801;//端口号 每个群/房间都不同
+// setInterval(function(){
+// 		var enryROOM_port1 = '18'+localStorage.getItem('big_id')+'';
+// 		var enryROOM_server1 = io.connect('http://apistore.51daniu.cn:'+enryROOM_port1);
+// 		var enryROOM1 = {
+// 				imsend: function () {
+// 				},
+// 				imlisten: function () {
+// 					enryROOM_server1.on('enryROOMreceive'+enryROOM_port1+'', function (res) {
+// 							var res=$.parseJSON(res);
+// 							console.log(res);
+// 					});
+// 				}
+// 		}
+// 		enryROOM1.imsend('');//建立握手关系
+// 		enryROOM1.imlisten();//建立监听
+// },10000);
+var enryROOM_server = io.connect('http://apistore.51daniu.cn:'+enryROOM_port);
+var enryROOM = {
+	//发送消息
+		imsend: function () {
+		},
+	////接收消息
+		imlisten: function () {
+			enryROOM_server.on('enryROOMreceive1801', function (res) {
+					var res=$.parseJSON(res);
+					for(var i=0,enryROOM_data='';i<res.data.length;i++){
+							localStorage.setItem('gcode_fir',''+res.data[0].code+'');
+							var openprice = res.data[i].openprice;
+							var newprice = res.data[i].newprice;
+							var range = res.data[i].range;
+							var rangerate = res.data[i].rangerate;
+							var highestprice = res.data[i].highestprice;
+							var lowestprice = res.data[i].lowestprice;
+							var closeprice = res.data[i].closeprice;
+							var avarageprice = res.data[i].avarageprice;
+							var surplus = res.data[i].surplus;
+							if(res.data[i].openprice != ''){
+									openprice = res.data[i].openprice;
+							}else{
+									openprice = '——';
+							}
+							if(res.data[i].newprice != ''){
+									newprice = res.data[i].newprice;
+							}else{
+									newprice = '——';
+							}
+							if(res.data[i].range != ''){
+									if(parseInt(range)>=0){
+										range = '<i class="i6 red">+'+res.data[i].range+'<\/i>';
+									}else{
+										range = '<i class="i6 green">'+res.data[i].range+'<\/i>';
+									}
+							}else{
+									range = '<i class="i6">——<\/i>';
+							}
+							if(res.data[i].rangerate != ''){
+									if(parseInt(rangerate)>=0){
+										rangerate = '<i class="i7 red">+'+res.data[i].rangerate+'<\/i>';
+									}else{
+										rangerate = '<i class="i7 green">'+res.data[i].rangerate+'<\/i>';
+									}
+							}else{
+									rangerate = '<i class="i7">——<\/i>';
+							}
+							if(res.data[i].highestprice != ''){
+									highestprice = res.data[i].highestprice;
+							}else{
+									highestprice = '——';
+							}
+							if(res.data[i].lowestprice != ''){
+									lowestprice = res.data[i].lowestprice;
+							}else{
+									lowestprice = '——';
+							}
+							if(res.data[i].closeprice != ''){
+									closeprice = res.data[i].closeprice;
+							}else{
+									closeprice = '——';
+							}
+							if(res.data[i].avarageprice != ''){
+									avarageprice = res.data[i].avarageprice;
+							}else{
+									avarageprice = '——';
+							}
+							if(res.data[i].surplus != ''){
+									surplus = res.data[i].surplus;
+							}else{
+									surplus = '——';
+							}
+							enryROOM_data += '<li ondblclick="javascript:jiaoyi_detail();" onclick="javascript:$(this).addClass(\'active\').siblings().removeClass(\'active\');" onmousedown="javascript:youjian(\''+res.data[i].code+'\','+res.data[i].id+');"><i class="i1">'+res.data[i].id+'<\/i><i class="i2 yellow">'+res.data[i].code+'</\i><i class="i3 yellow">'+res.data[i].title+'<\/i><i class="i4">'+openprice+'<\/i><i class="i5 red">'+newprice+'<\/i>'+range+rangerate+'<i class="i8 red">'+highestprice+'<\/i><i class="i9 green">'+lowestprice+'<\/i><i class="i10">'+closeprice+'<\/i><i class="i12">'+avarageprice+'<\/i><i class="i13">'+surplus+'<\/i></li>';
+					}
+				  $('#jiaoyi_list').html('<li style="border-bottom:1px solid #e03e3f;position:fixed;width:98.5%;z-index:10000;background-color:#000;border-top:1px solid #e03e3f;"><i class="i1">&nbsp;<\/i><i class="i2 yellow">代码<img src="attms\/img\/top.png" alt="" \/><\/i><i class="i3">商品名称<\/i><i class="i4">开盘价<\/i><i class="i5">最新<\/i><i class="i6">涨跌<\/i><i class="i7">幅度<\/i><i class="i8">最高价<\/i><i class="i9">最低价<\/i><i class="i10">昨收盘价<\/i><i class="i12">均价<\/i><i class="i13">现量<\/i>'+enryROOM_data);
+			});
+		}
+}
+
+
+
+$.post(RestApi, {c: 'trade',a:'dealist'}, function(response){
+			console.log(response);
+			var responseObj=$.parseJSON(response);
+			if(responseObj.code==200){
+					for(var i=0,item='';i<responseObj.data.length;i++){
+							localStorage.setItem('gcode_fir',''+responseObj.data[0].code+'');
+							var openprice = responseObj.data[i].openprice;
+							var newprice = responseObj.data[i].newprice;
+							var range = responseObj.data[i].range;
+							var rangerate = responseObj.data[i].rangerate;
+							var highestprice = responseObj.data[i].highestprice;
+							var lowestprice = responseObj.data[i].lowestprice;
+							var closeprice = responseObj.data[i].closeprice;
+							var avarageprice = responseObj.data[i].avarageprice;
+							var surplus = responseObj.data[i].surplus;
+							if(responseObj.data[i].openprice != ''){
+									openprice = responseObj.data[i].openprice;
+							}else{
+									openprice = '——';
+							}
+							if(responseObj.data[i].newprice != ''){
+									newprice = responseObj.data[i].newprice;
+							}else{
+									newprice = '——';
+							}
+							if(responseObj.data[i].range != ''){
+									if(parseInt(range)>=0){
+										range = '<i class="i6 red">+'+responseObj.data[i].range+'<\/i>';
+									}else{
+										range = '<i class="i6 green">'+responseObj.data[i].range+'<\/i>';
+									}
+							}else{
+									range = '<i class="i6">——<\/i>';
+							}
+							if(responseObj.data[i].rangerate != ''){
+									if(parseInt(rangerate)>=0){
+										rangerate = '<i class="i7 red">+'+responseObj.data[i].rangerate+'<\/i>';
+									}else{
+										rangerate = '<i class="i7 green">'+responseObj.data[i].rangerate+'<\/i>';
+									}
+							}else{
+									rangerate = '<i class="i7">——<\/i>';
+							}
+							if(responseObj.data[i].highestprice != ''){
+									highestprice = responseObj.data[i].highestprice;
+							}else{
+									highestprice = '——';
+							}
+							if(responseObj.data[i].lowestprice != ''){
+									lowestprice = responseObj.data[i].lowestprice;
+							}else{
+									lowestprice = '——';
+							}
+							if(responseObj.data[i].closeprice != ''){
+									closeprice = responseObj.data[i].closeprice;
+							}else{
+									closeprice = '——';
+							}
+							if(responseObj.data[i].avarageprice != ''){
+									avarageprice = responseObj.data[i].avarageprice;
+							}else{
+									avarageprice = '——';
+							}
+							if(responseObj.data[i].surplus != ''){
+									surplus = responseObj.data[i].surplus;
+							}else{
+									surplus = '——';
+							}
+							item += '<li ondblclick="javascript:jiaoyi_detail();" onclick="javascript:$(this).addClass(\'active\').siblings().removeClass(\'active\');" onmousedown="javascript:youjian(\''+responseObj.data[i].code+'\','+responseObj.data[i].id+');"><i class="i1">'+responseObj.data[i].id+'<\/i><i class="i2 yellow">'+responseObj.data[i].code+'</\i><i class="i3 yellow">'+responseObj.data[i].title+'<\/i><i class="i4">'+openprice+'<\/i><i class="i5 red">'+newprice+'<\/i>'+range+rangerate+'<i class="i8 red">'+highestprice+'<\/i><i class="i9 green">'+lowestprice+'<\/i><i class="i10">'+closeprice+'<\/i><i class="i12">'+avarageprice+'<\/i><i class="i13">'+surplus+'<\/i></li>';
+					}
+					$('#jiaoyi_list').html('<li style="border-bottom:1px solid #e03e3f;position:fixed;width:98.5%;z-index:10000;background-color:#000;border-top:1px solid #e03e3f;"><i class="i1">&nbsp;<\/i><i class="i2 yellow">代码<img src="attms\/img\/top.png" alt="" \/><\/i><i class="i3">商品名称<\/i><i class="i4">开盘价<\/i><i class="i5">最新<\/i><i class="i6">涨跌<\/i><i class="i7">幅度<\/i><i class="i8">最高价<\/i><i class="i9">最低价<\/i><i class="i10">昨收盘价<\/i><i class="i12">均价<\/i><i class="i13">现量<\/i>'+item);
+			}
+});
+enryROOM.imsend('CN.ENRY.JJS');
+enryROOM.imlisten();//建立监听
+
+</script>
+</body>
+</html>

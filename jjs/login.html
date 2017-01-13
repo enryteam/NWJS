@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="attms/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="attms/easyui/themes/icon.css">
+  <script type="text/javascript" src="attms/js/jquery.min.js"></script>
+  <script type="text/javascript" src="attms/js/init.js"></script>
+	<style media="screen">
+			.login{
+				width: 575px;
+				background-image:url('attms/img/login.png');background-repeat:no-repeat;margin:13% auto 0;padding:0;height: 384px;
+			}
+			.login>h1{
+				padding: 0;
+				width: 265px;
+				margin: 0 auto 15px;
+				font-weight: normal;
+				height: 32px;
+				line-height: 32px;
+			}
+			.login>h1>i{
+				font-size: 16px;
+				color: #fff;
+				font-style: normal;
+			}
+			.login>h1>i>em{
+				width: 1em;
+				display: inline-block;
+			}
+			.login>h1>input.i1{
+				width: 175px;
+				border: 1px solid #cccccc;
+				height: 28px;
+				font-size: 14px;
+				color: #333;
+				padding: 0 10px;
+			}
+			.login>h1>input.i2{
+				width: 85px;
+				border: 1px solid #cccccc;
+				height: 28px;
+				font-size: 14px;
+				color: #333;
+				padding: 0 10px;
+			}
+			.login>h1>img{
+				width: 79px;
+				height: 30px;
+				display: inline-block;
+				vertical-align: middle;
+				margin-left: 10px;
+				margin-top: 4px;
+				cursor: pointer;
+			}
+			.login>h2{
+				padding: 0;
+				width: 265px;
+				margin: 0 auto 10px;
+				font-weight: normal;
+				height: 32px;
+				line-height: 32px;
+			}
+			.login>h2>input{
+				margin-right: 5px;
+			}
+			.login>h2>i{
+				display: inline-block;
+				font-size: 12px;
+				color: #fff;
+				font-style: normal;
+			}
+			.login>h2>a{
+				display: inline-block;
+				font-size: 12px;
+				color: #fff;
+				float: right;
+				margin-right: 4px;
+				text-decoration:none;
+			}
+			.login>h3{
+				padding: 0;
+				width: 265px;
+				margin: 0 auto;
+				font-weight: normal;
+				height: 32px;
+				line-height: 32px;
+			}
+			.login>h3>a{
+				display: inline-block;
+				width: 120px;
+				height: 28px;
+				line-height: 28px;
+				border: 1px solid #bf0a0c;
+				text-align: center;
+				font-size: 14px;
+				color: #e03e3f;
+				text-decoration:none;
+			}
+			.login>h3>a.a1{
+				background-color: #fcdbdb;
+			}
+			.login>h3>a.a2{
+				background-color: #ffffff;
+				float: right;
+				position: relative;
+				top:2px;
+			}
+			.login>h4{
+				padding: 0;
+				width: 444px;
+				margin: 42px auto 0;
+				font-weight: normal;
+				height: 32px;
+				line-height: 32px;
+				text-align: center;
+			}
+			.login>h4>a{
+				display: inline-block;
+				width: 97px;
+				height: 28px;
+				line-height: 30px;
+				border: 1px solid #bf0a0c;
+				text-align: center;
+				font-size: 14px;
+				color: #e03e3f;
+				text-decoration:none;
+				background-color: #fcdbdb;
+				margin-left: 10px;
+			}
+	</style>
+</head>
+<body style="background-color:#000;">
+		<div class="login">
+				<h1 style="padding-top:85px;"><i>用户名：</i><input type="text" name="" value="" class="i1" id="loginmode"></h1>
+				<h1><i>密<em></em>码：</i><input type="password" name="" value="" class="i1" id="password"></h1>
+				<h1 style="margin-bottom:10px;"><i>验证码：</i><input type="text" name="" value="" class="i2" id="checkcode"><img src="http://apistore.51daniu.cn/rest/index.php?a=checkcode" id="tuxing_yanzheng" /></h1>
+				<h2><input type="checkbox" name="" value=""><i>记住密码</i><a href="javascript:;">忘记密码</a></h2>
+				<h3><a href="javascript:;" class="a1" id="login">登 录</a><a href="javascript:;" class="a2">取 消</a></h3>
+				<h4><a href="javascript:;">在线行情</a><a href="javascript:;">开户</a><a href="javascript:;">上市</a><a href="javascript:;">发售</a></h4>
+		</div>
+</body>
+
+<script type="text/javascript">
+//  图形验证码
+$('#tuxing_yanzheng').click(function(){
+    var n = parseInt(Math.random()*(9999999999-1000000000+1)+1000000000);
+    $(this).attr('src','http://apistore.51daniu.cn/rest/index.php?a=checkcode&t='+n+'');
+});
+
+// 登录
+$('#login').click(function(){
+		var loginmode = $('#loginmode').val();
+		var password = $('#password').val();
+		var checkcode = $('#checkcode').val();
+		if(loginmode != ''){
+				if(password != ''){
+						if(checkcode != ''){
+								$.post(Apistore, {a: 'codecheck',checkcode:checkcode}, function(response){
+										console.log(response);
+										var responseObj=$.parseJSON(response);
+										if(responseObj.code == 200){
+												$.post(RestApi, { c: 'login',a: 'dologin',loginmode:loginmode,password:password}, function(response){
+														console.log(response);
+														var responseObj=$.parseJSON(response);
+														if(responseObj.code==200){
+																localStorage.setItem('user_name',''+loginmode+'');
+																localStorage.setItem('l_token',''+responseObj.data.token+'');
+																localStorage.setItem('l_id',''+responseObj.data.id+'');
+																localStorage.setItem('l_validity',''+responseObj.data.validity+'');
+																localStorage.setItem('l_account',''+responseObj.data.account+'');
+																window.location.href = 'index.html';
+														}else{
+																alert(responseObj.message);
+														}
+												});
+										}else{
+												alert('图形验证码有误，请重新输入！');
+										}
+								});
+						}else{
+								alert('请输入图形验证码！');
+						}
+				}else{
+						alert('请输入您的密码！');
+				}
+		}else{
+				alert('用户名不能为空！');
+		}
+});
+
+</script>
+</html>
